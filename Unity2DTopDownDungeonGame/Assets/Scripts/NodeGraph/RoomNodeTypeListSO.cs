@@ -13,4 +13,13 @@ public class RoomNodeTypeListSO : ScriptableObject
     [Tooltip("This list should be populated with all the RoomNodeType Scriptable Objects - it's used insted of a enum")]
     #endregion
     public List<RoomNodeTypeSO> list;
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(list), list);
+    }
+#endif
+    #endregion
 }

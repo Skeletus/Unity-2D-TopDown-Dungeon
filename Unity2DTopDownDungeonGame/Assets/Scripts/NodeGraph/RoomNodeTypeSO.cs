@@ -35,4 +35,13 @@ public class RoomNodeTypeSO : ScriptableObject
     [Header("One type should be None (Unassigned)")]
     #endregion
     public bool isNone;
+
+    #region Validation
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckEmptyStrings(this, nameof(roomNodeTypeName), roomNodeTypeName);
+    }
+#endif
+    #endregion
 }
