@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Callbacks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 
 public class RoomNodeGraphEditor : EditorWindow
 {
     private GUIStyle roomNodeStyle;
+    public static RoomNodeGraphSO currentRoomNodeGraph;
 
     // node layout values
     private const float nodeWidth = 160f;
@@ -29,6 +31,29 @@ public class RoomNodeGraphEditor : EditorWindow
         roomNodeStyle.normal.textColor = Color.white;
         roomNodeStyle.padding = new RectOffset(nodePadding, nodePadding, nodePadding, nodePadding);
         roomNodeStyle.border = new RectOffset(nodeBorder, nodeBorder, nodeBorder, nodeBorder);
+    }
+
+
+    /// <summary>
+    /// Open the room node graph editor window if a room node graph scriptable object asset is double clicked in inspector
+    /// </summary>
+    /// <param name="instanceID"></param>
+    /// <param name="line"></param>
+    /// <returns></returns>
+    [OnOpenAsset(0)] // need the namespace UnityEditor.Callback
+    private static bool OnDoubleClickAsset(int instanceID, int line)
+    {
+        RoomNodeGraphSO roomNodeGraph = EditorUtility.InstanceIDToObject(instanceID) as RoomNodeGraphSO;
+
+        if (roomNodeGraph != null)
+        {
+            OpenWindow();
+
+            currentRoomNodeGraph = roomNodeGraph;
+
+            return true;
+        }
+        return false;
     }
 
 
