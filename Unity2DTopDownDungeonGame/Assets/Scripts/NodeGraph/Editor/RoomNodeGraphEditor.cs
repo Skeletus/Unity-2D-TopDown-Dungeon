@@ -74,12 +74,27 @@ public class RoomNodeGraphEditor : EditorWindow
             ProcessEvents(Event.current);
 
             // draw room nodes
+            DrawRoomNodes();
         }
 
         if (GUI.changed)
         {
             Repaint();
         }
+    }
+
+    /// <summary>
+    /// Draw room nodes in the graph window
+    /// </summary>
+    private void DrawRoomNodes()
+    {
+        // loop through all room nodes and draw them
+        foreach( RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+        {
+
+        }
+
+        GUI.changed = true;
     }
 
     private void ProcessEvents(Event currentEvent)
