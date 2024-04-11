@@ -91,7 +91,7 @@ public class RoomNodeGraphEditor : EditorWindow
         // loop through all room nodes and draw them
         foreach( RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
         {
-
+            roomNode.Draw(roomNodeStyle);
         }
 
         GUI.changed = true;
