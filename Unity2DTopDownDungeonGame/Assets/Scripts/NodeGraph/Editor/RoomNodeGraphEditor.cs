@@ -175,7 +175,10 @@ public class RoomNodeGraphEditor : EditorWindow
         currentRoomNodeGraph.roomNodeList.Add(roomNode);
 
         // set room node values
+        Vector2 recSize = new Vector2(nodeWidth, nodeHeight);
+        Rect rect = new Rect(mousePosition, recSize);
 
+        roomNode.Initialize(rect, currentRoomNodeGraph, roomNodeTypeSO);
 
         // add room node to room node graph scriptable object asset database
         AssetDatabase.AddObjectToAsset(roomNode, currentRoomNodeGraph);
