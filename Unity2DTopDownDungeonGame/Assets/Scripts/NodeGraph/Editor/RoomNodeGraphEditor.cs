@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor.Callbacks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using System;
 
 public class RoomNodeGraphEditor : EditorWindow
 {
@@ -66,17 +67,104 @@ public class RoomNodeGraphEditor : EditorWindow
     /// </summary>
     private void OnGUI()
     {
-        Vector2 screenRectPosition = new Vector2(100f, 100f);
-        Vector2 screenRectSize = new Vector2(nodeWidth, nodeHeight);
+        // if a scriptable object of type: RoomNodeGraphSO has been selected then
+        if ( currentRoomNodeGraph != null)
+        {
+            // process events
+            ProcessEvents(Event.current);
 
-        GUILayout.BeginArea(new Rect(screenRectPosition, screenRectSize), roomNodeStyle);
-        EditorGUILayout.LabelField("Node 1");
-        GUILayout.EndArea();
+            // draw room nodes
+        }
 
-        Vector2 screenRectPosition2 = new Vector2(300f, 300f);
+        if (GUI.changed)
+        {
+            Repaint();
+        }
+    }
 
-        GUILayout.BeginArea(new Rect(screenRectPosition2, screenRectSize), roomNodeStyle);
-        EditorGUILayout.LabelField("Node 1");
-        GUILayout.EndArea();
+    private void ProcessEvents(Event currentEvent)
+    {
+        ProcessRoomNodeGraphEvents(currentEvent);
+    }
+
+    /// <summary>
+    /// Process Room Node Graphs Events
+    /// </summary>
+    /// <param name="currentEvent"></param>
+    private void ProcessRoomNodeGraphEvents(Event currentEvent)
+    {
+        switch(currentEvent.type)
+        {
+
+            // process mouse.down events
+            case EventType.MouseDown:
+                ProcessMouseDownEvent(currentEvent);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Process mouse down event on the room node graph ( not over a node)
+    /// </summary>
+    /// <param name="currentEvent"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    private void ProcessMouseDownEvent(Event currentEvent)
+    {
+        // process right click mouse down on graph event (show context menu)
+        if (currentEvent.button == 1)
+        {
+            ShowContextMenu(currentEvent.mousePosition);
+        }
+    }
+
+    /// <summary>
+    /// Show the context menu
+    /// </summary>
+    /// <param name="mousePosition"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    private void ShowContextMenu(Vector2 mousePosition)
+    {
+        GenericMenu menu = new GenericMenu();
+
+        menu.AddItem(new GUIContent("Create Room Node"), false, CreateRoomNode, mousePosition);
+
+        menu.ShowAsContext();
+    }
+
+
+    /// <summary>
+    /// Create a room node at the mouse position
+    /// </summary>
+    /// <param name="userData"></param>
+    private void CreateRoomNode(object mousePositionObject)
+    {
+        CreateRoomNode(mousePositionObject, roomNodeTypeList.list.Find(x => x.isNone));
+    }
+
+    /// <summary>
+    /// Create a room node at the mouse position - overloaded to also pass room node type
+    /// </summary>
+    /// <param name="mousePositionObject"></param>
+    /// <param name="roomNodeTypeSO"></param>
+    private void CreateRoomNode(object mousePositionObject, RoomNodeTypeSO roomNodeTypeSO)
+    {
+        Vector2 mousePosition = (Vector2)mousePositionObject;
+
+        // create room node scriptable object asset
+        RoomNodeSO roomNode = ScriptableObject.CreateInstance<RoomNodeSO>();
+
+        // add room node to current room node graph room node list
+        currentRoomNodeGraph.roomNodeList.Add(roomNode);
+
+        // set room node values
+
+
+        // add room node to room node graph scriptable object asset database
+        AssetDatabase.AddObjectToAsset(roomNode, currentRoomNodeGraph);
+
+        AssetDatabase.SaveAssets();
     }
 }
