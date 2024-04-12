@@ -174,15 +174,28 @@ public class RoomNodeSO : ScriptableObject
         // left click down
         if (currentEvent.button == 0)
         {
-            ProcessLeftClickEvents();
+            ProcessLeftClickDownEvents();
         }
+        // right click down 
+        else if (currentEvent.button == 1)
+        {
+            ProcessRightClickDownEvents(currentEvent);
+        }
+    }
+
+    /// <summary>
+    /// Process right click down events
+    /// </summary>
+    private void ProcessRightClickDownEvents(Event currentEvent)
+    {
+        roomNodeGraph.SetNodeToDrawConnectionLines(this, currentEvent.mousePosition);
     }
 
     /// <summary>
     /// Process left click down event
     /// </summary>
     /// <exception cref="NotImplementedException"></exception>
-    private void ProcessLeftClickEvents()
+    private void ProcessLeftClickDownEvents()
     {
         Selection.activeObject = this;
 

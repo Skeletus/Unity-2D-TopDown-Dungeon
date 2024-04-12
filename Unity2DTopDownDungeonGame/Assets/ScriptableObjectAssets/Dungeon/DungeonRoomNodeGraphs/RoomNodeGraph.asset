@@ -63,12 +63,12 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: c174fa5d20e3fed4681bc4e3726b925b, type: 2}
   rect:
     serializedVersion: 2
-    x: 303
-    y: 268
+    x: 516
+    y: 174
     width: 160
     height: 75
   isLeftClickingDragging: 0
-  isSelected: 0
+  isSelected: 1
 --- !u!114 &8715540533107863681
 MonoBehaviour:
   m_ObjectHideFlags: 0
