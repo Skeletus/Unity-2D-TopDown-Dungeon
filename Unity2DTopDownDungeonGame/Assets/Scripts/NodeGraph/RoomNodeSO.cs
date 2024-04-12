@@ -81,6 +81,28 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
+    /// Add child ID to the node (returns true if the node has been added, false otherwise)
+    /// </summary>
+    /// <param name="childID"></param>
+    /// <returns></returns>
+    public bool AddChildRoomNodeIDToRoomNode(string childID)
+    {
+        childRoomNodeIDList.Add(childID);
+        return true;
+    }
+
+    /// <summary>
+    /// Add parent ID to the node (returns true if the node has been added, false otherwise)
+    /// </summary>
+    /// <param name="parentID"></param>
+    /// <returns></returns>
+    public bool AddParentRoomNodeIDToRoomNode(string parentID)
+    {
+        parentRoomNodeIDList.Add(parentID);
+        return true;
+    }
+
+    /// <summary>
     /// Process events for the node
     /// </summary>
     /// <param name="currentEvent"></param>
