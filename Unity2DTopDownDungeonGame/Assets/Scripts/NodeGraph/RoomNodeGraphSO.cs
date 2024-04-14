@@ -37,7 +37,7 @@ public class RoomNodeGraphSO : ScriptableObject
     [HideInInspector] public Vector2 linePosition;
 
     // repopulate node dictionary every time a change is made in the editor
-    private void OnValidate()
+    public void OnValidate()
     {
         LoadRoomNodeDictionary();
     }

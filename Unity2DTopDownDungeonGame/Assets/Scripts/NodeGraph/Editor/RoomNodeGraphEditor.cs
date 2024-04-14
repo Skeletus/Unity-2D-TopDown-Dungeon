@@ -80,6 +80,9 @@ public class RoomNodeGraphEditor : EditorWindow
             // process events
             ProcessEvents(Event.current);
 
+            // draw connections between room nodes
+            DrawRoomConnections();
+
             // draw room nodes
             DrawRoomNodes();
         }
@@ -88,6 +91,42 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             Repaint();
         }
+    }
+
+    private void DrawRoomConnections()
+    {
+        // loop through all room nodes
+        foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+        {
+            if (roomNode.childRoomNodeIDList.Count > 0)
+            {
+                // lopp through child room nodes
+                foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
+                {
+                    DrawConnectionLine(roomNode, currentRoomNodeGraph.roomNodeDictionary[childRoomNodeID]);
+
+                    GUI.changed = true;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Draw connection line between the parent and the child room node
+    /// </summary>
+    /// <param name="roomNode"></param>
+    /// <param name="roomNodeSO"></param>
+    private void DrawConnectionLine(RoomNodeSO parentRoomNode, RoomNodeSO childRoomNode)
+    {
+        // get line start and position
+        Vector2 startPosition = parentRoomNode.rect.center;
+        Vector2 endPosition = childRoomNode.rect.center;
+
+        // draw line
+        Handles.DrawBezier(startPosition, endPosition, startPosition, endPosition,
+            Color.white, null, connectingLineWidth);
+
+        GUI.changed = true;
     }
 
     private void DrawDraggedLine()
@@ -323,5 +362,8 @@ public class RoomNodeGraphEditor : EditorWindow
         AssetDatabase.AddObjectToAsset(roomNode, currentRoomNodeGraph);
 
         AssetDatabase.SaveAssets();
+
+        // refresh node graph dictionary
+        currentRoomNodeGraph.OnValidate();
     }
 }
