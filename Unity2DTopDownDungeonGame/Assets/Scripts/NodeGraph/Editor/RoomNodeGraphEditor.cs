@@ -5,6 +5,7 @@ using UnityEditor.Callbacks;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using System;
+using UnityEngine.Assertions.Must;
 
 public class RoomNodeGraphEditor : EditorWindow
 {
@@ -21,6 +22,7 @@ public class RoomNodeGraphEditor : EditorWindow
 
     // connecting line values
     private const float connectingLineWidth = 5f;
+    private const float connectingLineArrowSize = 5f;
 
     [MenuItem("Room Node Graph Editor", menuItem = "Window/Dungeon Editor/Room Node Graph Editor")]
 
@@ -121,6 +123,26 @@ public class RoomNodeGraphEditor : EditorWindow
         // get line start and position
         Vector2 startPosition = parentRoomNode.rect.center;
         Vector2 endPosition = childRoomNode.rect.center;
+
+        // calculate midway point
+        Vector2 midPosition = (endPosition + startPosition) / 2f;
+
+        // vector from start to end position of line
+        Vector2 direction = endPosition - startPosition;
+
+        // calculate normalized perpendicular positions from mid point
+        Vector2 perpendicularVectorToMidPosition = new Vector2(-direction.y, direction.x).normalized;
+        Vector2 arrowTailPoint1 = midPosition - perpendicularVectorToMidPosition * connectingLineArrowSize;
+        Vector2 arrowTailPoint2 = midPosition + perpendicularVectorToMidPosition * connectingLineArrowSize;
+
+        // calculate mid point offset position for arrow head
+        Vector2 arrowHeadPoint = midPosition + direction.normalized * connectingLineArrowSize;
+
+        // draw arrow
+        Handles.DrawBezier(arrowHeadPoint, arrowTailPoint1, arrowHeadPoint, arrowTailPoint1, 
+            Color.white, null, connectingLineWidth);
+        Handles.DrawBezier(arrowHeadPoint, arrowTailPoint2, arrowHeadPoint, arrowTailPoint2,
+            Color.white, null, connectingLineWidth);
 
         // draw line
         Handles.DrawBezier(startPosition, endPosition, startPosition, endPosition,
