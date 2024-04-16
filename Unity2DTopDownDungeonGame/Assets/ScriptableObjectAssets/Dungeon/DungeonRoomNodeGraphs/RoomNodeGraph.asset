@@ -50,11 +50,11 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 270
-    y: 340
+    y: 346
     width: 160
     height: 75
   isLeftClickingDragging: 0
-  isSelected: 1
+  isSelected: 0
 --- !u!114 &-6464797723636685869
 MonoBehaviour:
   m_ObjectHideFlags: 0
