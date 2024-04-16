@@ -148,7 +148,49 @@ public class RoomNodeSO : ScriptableObject
             return false;
         }
 
-        return false;
+        // if this childID is already in the parentID list return false
+        if (parentRoomNodeIDList.Contains(childID))
+        {
+            return false;
+        }
+
+        // if the child node already has a parent return false
+        if (childRoomNode.parentRoomNodeIDList.Count > 0)
+        {
+            return false;
+        }
+
+        // if the child is a corridor and this node is a corridor return false
+        if (childRoomNode.roomNodeType.isCorridor && roomNodeType.isCorridor)
+        {
+            return false;
+        }
+
+        // if the child is not a corridor and this node is not a corridor return false
+        if (!childRoomNode.roomNodeType.isCorridor && !roomNodeType.isCorridor)
+        {
+            return false;
+        }
+
+        // if adding a corridor check that this node has < the maxium permited child corridors
+        if (childRoomNode.roomNodeType.isCorridor && childRoomNodeIDList.Count >= Settings.maxChildCorridors)
+        {
+            return false;
+        }
+
+        // if the child room is an entrance return false - the entrance must always be the top level parent node
+        if (childRoomNode.roomNodeType.isEntrance)
+        {
+            return false;
+        }
+
+        // if adding a room to a corridor check that this corridor node doesn't already have a room node added
+        if (!childRoomNode.roomNodeType.isCorridor && childRoomNodeIDList.Count > 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
