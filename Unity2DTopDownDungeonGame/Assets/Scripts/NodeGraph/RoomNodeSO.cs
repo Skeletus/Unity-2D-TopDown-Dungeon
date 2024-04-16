@@ -96,8 +96,59 @@ public class RoomNodeSO : ScriptableObject
     /// <returns></returns>
     public bool AddChildRoomNodeIDToRoomNode(string childID)
     {
-        childRoomNodeIDList.Add(childID);
-        return true;
+        // check child node can be added validly to parent
+        if (IsChildRoomValid(childID))
+        {
+            childRoomNodeIDList.Add(childID);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// check the child node can be validly added to the parent node - return true if it otherwise return false
+    /// </summary>
+    /// <param name="childID"></param>
+    /// <returns></returns>
+    private bool IsChildRoomValid(string childID)
+    {
+        bool isConnectedBossRoomAlready = false;
+        // check if there is already a connected boss room in the node graph
+        foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList)
+        {
+            if (roomNode.roomNodeType.isBossRoom && roomNode.parentRoomNodeIDList.Count > 0)
+            {
+                isConnectedBossRoomAlready = true;
+            }
+        }
+
+        //if the child node has a type of boss room and there is already a connected boss room node then return false
+        RoomNodeSO childRoomNode = roomNodeGraph.GetRomNode(childID);
+        if (childRoomNode.roomNodeType.isBossRoom && isConnectedBossRoomAlready)
+        {
+            return false;
+        }
+
+        // if the child node has a type of none then return false;
+        if (childRoomNode.roomNodeType.isNone)
+        {
+            return false;
+        }
+
+        // if the node already has a child with this child id return false
+        if (childRoomNodeIDList.Contains(childID))
+        {
+            return false;
+        }
+
+        // if the node id and the child id are the same return false
+        if (id == childID)
+        {
+            return false;
+        }
+
+        return false;
     }
 
     /// <summary>
