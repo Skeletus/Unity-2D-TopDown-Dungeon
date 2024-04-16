@@ -29,6 +29,20 @@ public class RoomNodeGraphSO : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// Get room by room nodeID
+    /// </summary>
+    /// <param name="roomNodeID"></param>
+    /// <returns></returns>
+    public RoomNodeSO GetRomNode(string roomNodeID)
+    {
+        if (roomNodeDictionary.TryGetValue(roomNodeID, out RoomNodeSO roomNode))
+        {
+            return roomNode;
+        }
+        return null;
+    }
+
     #region Editor Code
 
 #if UNITY_EDITOR
