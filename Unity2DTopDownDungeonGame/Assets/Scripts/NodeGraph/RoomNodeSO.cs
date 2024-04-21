@@ -205,6 +205,40 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
+    /// remove child ID from the node (returns true if the node has been removed, false otherwsie)
+    /// </summary>
+    /// <param name="childID"></param>
+    /// <returns></returns>
+    public bool RemoveChildRoomNodeIDFromRoomNode(string childID)
+    {
+        // if the node contains the child ID then remove it
+        if (childRoomNodeIDList.Contains(childID))
+        {
+            childRoomNodeIDList.Remove(childID);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// remove parent ID from the node (returns true if the node has been removed, false otherwsie)
+    /// </summary>
+    /// <param name="parentID"></param>
+    /// <returns></returns>
+    public bool RemoveParentRoomNodeIDFromRoomNode(string parentID)
+    {
+        // if the node contains the parent ID then remove it
+        if (parentRoomNodeIDList.Contains(parentID))
+        {
+            parentRoomNodeIDList.Remove(parentID);
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Process events for the node
     /// </summary>
     /// <param name="currentEvent"></param>
