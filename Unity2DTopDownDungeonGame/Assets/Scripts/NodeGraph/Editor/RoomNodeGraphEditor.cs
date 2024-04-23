@@ -115,6 +115,10 @@ public class RoomNodeGraphEditor : EditorWindow
         // if a scriptable object of type: RoomNodeGraphSO has been selected then
         if ( currentRoomNodeGraph != null)
         {
+            // draw grid
+            DrawBackgroundGrid(gridSmall, 0.2f, Color.gray);
+            DrawBackgroundGrid(gridLarge, 0.3f, Color.gray);
+
             // draw line if being dragged
             DrawDraggedLine();
 
@@ -132,6 +136,45 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             Repaint();
         }
+    }
+
+    /// <summary>
+    /// Draw a background grid for the room node graph editor
+    /// </summary>
+    /// <param name="gridSize"></param>
+    /// <param name="gridOpacity"></param>
+    /// <param name="gridColor"></param>
+    private void DrawBackgroundGrid(float gridSize, float gridOpacity, Color gridColor)
+    {
+        float screenWidth = position.width;
+        float screenHeight = position.height;
+
+        int verticalLineCount = Mathf.CeilToInt( (screenWidth + gridSize) / gridSize);
+        int horizontalLineCount = Mathf.CeilToInt( (screenHeight + gridSize) / gridSize);
+
+        Handles.color = new Color(gridColor.r, gridColor.g, gridColor.b, gridOpacity);
+
+        graphOffset += graphDrag * 0.5f;
+
+        Vector3 gridOffset = new Vector3(graphOffset.x % gridSize, graphOffset.y % gridSize, 0);
+
+        for (int i = 0; i < verticalLineCount; i++)
+        {
+            Vector3 startPosition = new Vector3(gridSize * i, -gridSize, 0) + gridOffset;
+            Vector3 endPosition = new Vector3(gridSize * i, position.height + gridSize, 0f) + gridOffset;
+
+            Handles.DrawLine(startPosition, endPosition);
+        }
+
+        for (int j = 0; j < horizontalLineCount; j++)
+        {
+            Vector3 startPosition = new Vector3(-gridSize, gridSize * j, 0) + gridOffset;
+            Vector3 endPosition = new Vector3(position.width + gridSize, gridSize * j, 0f) + gridOffset;
+
+            Handles.DrawLine(startPosition, endPosition);
+        }
+
+        Handles.color = Color.white;
     }
 
     private void DrawRoomConnections()
