@@ -12,6 +12,10 @@ public class RoomNodeGraphEditor : EditorWindow
     private GUIStyle roomNodeStyle;
     private GUIStyle roomNodeSelectedStyle;
     public static RoomNodeGraphSO currentRoomNodeGraph;
+
+    private Vector2 graphOffset;
+    private Vector2 graphDrag;
+
     private RoomNodeSO currentRoomNode = null;
     private RoomNodeTypeListSO roomNodeTypeList;
 
@@ -24,6 +28,10 @@ public class RoomNodeGraphEditor : EditorWindow
     // connecting line values
     private const float connectingLineWidth = 5f;
     private const float connectingLineArrowSize = 5f;
+
+    // grid spacing
+    private const float gridLarge = 100f;
+    private const float gridSmall = 25f;
 
     [MenuItem("Room Node Graph Editor", menuItem = "Window/Dungeon Editor/Room Node Graph Editor")]
 
@@ -222,6 +230,8 @@ public class RoomNodeGraphEditor : EditorWindow
 
     private void ProcessEvents(Event currentEvent)
     {
+        // reset graph drag 
+        graphDrag = Vector2.zero;
         
         // get room node that mouse is over if's null or not not currently being dragged
         if (currentRoomNode == null || currentRoomNode.isLeftClickingDragging == false)
@@ -335,6 +345,27 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             ProcessRightMouseDragEvent(currentEvent);
         }
+        // process left click drag event - drag node graph
+        else if (currentEvent.button == 0)
+        {
+            ProcessLeftMouseDragEvent(currentEvent.delta);
+        }
+    }
+
+    /// <summary>
+    /// process left mouse drag event - drag room node graph
+    /// </summary>
+    /// <param name="delta"></param>
+    private void ProcessLeftMouseDragEvent(Vector2 dragDelta)
+    {
+        graphDrag = dragDelta;
+
+        for (int i = 0; i < currentRoomNodeGraph.roomNodeList.Count; i++)
+        {
+            currentRoomNodeGraph.roomNodeList[i].DragNode(dragDelta);
+        }
+
+        GUI.changed = true;
     }
 
     /// <summary>
