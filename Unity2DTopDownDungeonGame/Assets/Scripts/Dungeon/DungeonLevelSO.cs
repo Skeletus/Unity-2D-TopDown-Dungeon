@@ -142,12 +142,12 @@ public class DungeonLevelSO : ScriptableObject
                         isRoomNodeTypeFound = true;
                         break;
                     }
+                }
 
-                    if (!isRoomNodeTypeFound)
-                    {
-                        Debug.Log("In " + this.name.ToString() + " : No room template " + roomNodeSO.roomNodeType.name.ToString() +
-                            " found for node graph " + roomNodeGraph.name.ToString());
-                    }
+                if (!isRoomNodeTypeFound)
+                {
+                    Debug.Log("In " + this.name.ToString() + " : No room template " + roomNodeSO.roomNodeType.name.ToString() +
+                        " found for node graph " + roomNodeGraph.name.ToString());
                 }
             }
         }
