@@ -103,6 +103,54 @@ public class DungeonLevelSO : ScriptableObject
         }
 
         // loop throguh all node graphs
+        foreach(RoomNodeGraphSO roomNodeGraph in roomNodeGraphList)
+        {
+            if (roomNodeGraph == null)
+            {
+                return;
+            }
+
+            // loop through all nodes in node graph
+            foreach(RoomNodeSO roomNodeSO in roomNodeGraph.roomNodeList)
+            {
+                if (roomNodeSO == null)
+                {
+                    continue;
+                }
+
+                // check that a room template has been specified for each room node type
+
+                // corridors and entrance already checked
+                if (roomNodeSO.roomNodeType.isEntrance || roomNodeSO.roomNodeType.isCorridorEW ||
+                    roomNodeSO.roomNodeType.isCorridorNS || roomNodeSO.roomNodeType.isCorridor ||
+                    roomNodeSO.roomNodeType.isNone)
+                {
+                    continue;
+                }
+
+                bool isRoomNodeTypeFound = false;
+
+                // loop throguh all room templates to check that this node type has been specified
+                foreach(RoomTemplateSO roomTemplateSO in roomTemplateList)
+                {
+                    if (roomTemplateSO == null)
+                    {
+                        continue;
+                    }
+                    if (roomTemplateSO.roomNodeType == roomNodeSO.roomNodeType)
+                    {
+                        isRoomNodeTypeFound = true;
+                        break;
+                    }
+
+                    if (!isRoomNodeTypeFound)
+                    {
+                        Debug.Log("In " + this.name.ToString() + " : No room template " + roomNodeSO.roomNodeType.name.ToString() +
+                            " found for node graph " + roomNodeGraph.name.ToString());
+                    }
+                }
+            }
+        }
     }
 #endif
     #endregion Validation
