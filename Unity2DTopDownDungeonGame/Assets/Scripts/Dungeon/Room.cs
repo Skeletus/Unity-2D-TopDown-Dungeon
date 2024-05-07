@@ -17,4 +17,14 @@ public class Room : MonoBehaviour
     public string parentRoomID;
     public List<Doorway> doorwayList;
     public bool isPositioned = false;
+    public InstantiatedRoom instantiatedRoom;
+    public bool isLit = false;
+    public bool isClearOfEnemies = false;
+    public bool isPreviouslyVisited = false;
+
+    public Room()
+    {
+        childRoomIDList = new List<string>();
+        doorwayList = new List<Doorway>();
+    }
 }
