@@ -128,7 +128,51 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     }
 
+    /// <summary>
+    /// Process rooms in the open room node queue, returning true if there are no room overlaps
+    /// </summary>
+    /// <param name="roomNodeGraph"></param>
+    /// <param name="openRoomNodeQueue"></param>
+    /// <param name="noRoomOverLaps"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     private bool ProcessRoomInOpenRoomNodeQueue(RoomNodeGraphSO roomNodeGraph, Queue<RoomNodeSO> openRoomNodeQueue, bool noRoomOverLaps)
+    {
+        // while room nodes in open room node queue & no room overlaps detected
+        while(openRoomNodeQueue.Count > 0 && noRoomOverLaps == true)
+        {
+            // get next room node from open room node queue
+            RoomNodeSO roomNode = openRoomNodeQueue.Dequeue();
+
+            // add child nodes to queue from node graph (with links to this parent room)
+            foreach(RoomNodeSO childRoomNode in roomNodeGraph.GetChildRoomNodes(roomNode))
+            {
+                openRoomNodeQueue.Enqueue(childRoomNode);
+            }
+
+            // if the room is the entrance mark as positioned and add to room dictionary
+            if (roomNode.roomNodeType.isEntrance)
+            {
+                RoomTemplateSO roomTemplate = GetRandomRoomTemplate(roomNode.roomNodeType);
+
+                Room room = CreateRoomFromRoomTemplate(roomTemplate, roomNode);
+
+                room.isPositioned = true;
+
+                // add room to room dictionary
+                dungeonBuilderRoomDictionary.Add(room.id, room);
+            }
+        }
+
+        throw new NotImplementedException();
+    }
+
+    private Room CreateRoomFromRoomTemplate(RoomTemplateSO roomTemplate, RoomNodeSO roomNode)
+    {
+        throw new NotImplementedException();
+    }
+
+    private RoomTemplateSO GetRandomRoomTemplate(RoomNodeTypeSO roomNodeType)
     {
         throw new NotImplementedException();
     }
