@@ -172,9 +172,34 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Get a random room template from the room template list that matches the roomtype and return it
+    /// </summary>
+    /// <param name="roomNodeType"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     private RoomTemplateSO GetRandomRoomTemplate(RoomNodeTypeSO roomNodeType)
     {
-        throw new NotImplementedException();
+        List<RoomTemplateSO> matchingRoomTemplateList = new List<RoomTemplateSO>();
+
+        // loop through room template list
+        foreach(RoomTemplateSO roomTemplate in roomTemplateList)
+        {
+            // add matching room template
+            if (roomTemplate.roomNodeType == roomNodeType)
+            {
+                matchingRoomTemplateList.Add(roomTemplate);
+            }
+        }
+
+        // return null if list is empty
+        if (matchingRoomTemplateList.Count == 0)
+        {
+            return null;
+        }
+
+        // select random room template from list and return
+        return matchingRoomTemplateList[UnityEngine.Random.Range(0, matchingRoomTemplateList.Count)];
     }
 
     /// <summary>
