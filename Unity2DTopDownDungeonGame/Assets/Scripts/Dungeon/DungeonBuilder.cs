@@ -53,9 +53,62 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
             // select a random room node graph from the list
             RoomNodeGraphSO roomNodeGraph = SelectRandomRoomNodeGraph(currentDungeonLevel.roomNodeGraphList);
+
+            int dungeonReBuildAttemptsForNodeGraph = 0;
+            dungeonBuildSuccessful = false;
+
+            // loop until dungeon succesfully built or more than max attempts for nod graph
+            while(!dungeonBuildSuccessful && 
+                dungeonReBuildAttemptsForNodeGraph <= Settings.maxDungeonReBuildAttemptsFromRoomGraph)
+            {
+                // clear dungeon room gameobjects and dungeon room dictionary
+                ClearDungeon();
+
+                dungeonReBuildAttemptsForNodeGraph++;
+
+                // attempt to build a room dungeon for the selected room node graph
+                dungeonBuildSuccessful = AttemptToBuildRandomDungeon(roomNodeGraph);
+            }
+
+            if (dungeonBuildSuccessful)
+            {
+                // instantiate room gameobjects
+                InstantiateRoomGameObjects();
+            }
         }
 
         return true;
+    }
+
+    private void InstantiateRoomGameObjects()
+    {
+        throw new NotImplementedException();
+    }
+
+    private bool AttemptToBuildRandomDungeon(RoomNodeGraphSO roomNodeGraph)
+    {
+        return true;
+    }
+
+    /// <summary>
+    /// Clear dungeon room gameobjects and dungeon room dictionary
+    /// </summary>
+    private void ClearDungeon()
+    {
+        // destroy instantiated dungeon gameobjcets and clear dungeon manager room dictionary
+        if (dungeonBuilderRoomDictionary.Count > 0)
+        {
+            foreach(KeyValuePair<string, Room> keyValuePair in dungeonBuilderRoomDictionary)
+            {
+                Room room = keyValuePair.Value;
+
+                if (room.instantiatedRoom != null)
+                {
+                    Destroy(room.instantiatedRoom.gameObject);
+                }
+            }
+            dungeonBuilderRoomDictionary.Clear();
+        }
     }
 
     /// <summary>
