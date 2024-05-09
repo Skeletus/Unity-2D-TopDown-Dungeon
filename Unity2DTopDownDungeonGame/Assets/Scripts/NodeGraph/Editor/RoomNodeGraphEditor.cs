@@ -506,7 +506,7 @@ public class RoomNodeGraphEditor : EditorWindow
                 foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
                 {
                     // retrieve child room node 
-                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRomNode(childRoomNodeID);
+                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNode(childRoomNodeID);
 
                     if (childRoomNode != null)
                     {
@@ -519,7 +519,7 @@ public class RoomNodeGraphEditor : EditorWindow
                 foreach (string parentRoomNodeID in roomNode.parentRoomNodeIDList)
                 {
                     // retrieve parent room node
-                    RoomNodeSO parentRoomNode = currentRoomNodeGraph.GetRomNode(parentRoomNodeID);
+                    RoomNodeSO parentRoomNode = currentRoomNodeGraph.GetRoomNode(parentRoomNodeID);
 
                     if (parentRoomNode != null)
                     {
@@ -564,7 +564,7 @@ public class RoomNodeGraphEditor : EditorWindow
                 {
                     // get child ID room node
                     string currentRoomNodeID = currentRoomNode.childRoomNodeIDList[i];
-                    RoomNodeSO currentChildRoomNode = currentRoomNodeGraph.GetRomNode(currentRoomNodeID);
+                    RoomNodeSO currentChildRoomNode = currentRoomNodeGraph.GetRoomNode(currentRoomNodeID);
 
                     // if the child room node is selected
                     if (currentChildRoomNode != null && currentChildRoomNode.isSelected)

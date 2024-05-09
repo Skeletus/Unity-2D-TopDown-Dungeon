@@ -76,7 +76,7 @@ public class RoomNodeSO : ScriptableObject
                     for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--)
                     {
                         // get chil room node
-                        RoomNodeSO childRoomNode = roomNodeGraph.GetRomNode(childRoomNodeIDList[i]);
+                        RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childRoomNodeIDList[i]);
 
                         // if the child room node it's not null
                         if (childRoomNode != null)
@@ -150,7 +150,7 @@ public class RoomNodeSO : ScriptableObject
         }
 
         //if the child node has a type of boss room and there is already a connected boss room node then return false
-        RoomNodeSO childRoomNode = roomNodeGraph.GetRomNode(childID);
+        RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childID);
         if (childRoomNode.roomNodeType.isBossRoom && isConnectedBossRoomAlready)
         {
             return false;
