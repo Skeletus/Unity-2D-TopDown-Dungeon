@@ -167,9 +167,88 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Create room based on room template and layout node, and return created room
+    /// </summary>
+    /// <param name="roomTemplate"></param>
+    /// <param name="roomNode"></param>
+    /// <returns></returns>
     private Room CreateRoomFromRoomTemplate(RoomTemplateSO roomTemplate, RoomNodeSO roomNode)
     {
-        throw new NotImplementedException();
+        // initialise room from template
+        Room room = new Room();
+
+        room.templateID = roomTemplate.guid;
+        room.id = roomNode.id;
+        room.prefab = roomTemplate.prefab;
+        room.roomNodeType = roomTemplate.roomNodeType;
+        room.lowerBounds = roomTemplate.lowerBounds;
+        room.upperBounds = roomTemplate.upperBounds;
+        room.spawnPositionArray = roomTemplate.spawnPositionArray;
+        room.templateLowerBounds = roomTemplate.lowerBounds;
+        room.templateUpperBounds = roomTemplate.upperBounds;
+
+        room.childRoomIDList = CopyStringList(roomNode.childRoomNodeIDList);
+        room.doorwayList = CopyDoorwayList(roomTemplate.doorwayList);
+
+        // set parent ID for room 
+        if (roomNode.parentRoomNodeIDList.Count == 0) // entrance
+        {
+            room.parentRoomID = "";
+            room.isPreviouslyVisited = true;
+        }
+        else
+        {
+            room.parentRoomID = roomNode.parentRoomNodeIDList[0];
+        }
+
+        return room;
+    }
+
+    /// <summary>
+    /// Create deep copy of doorway list
+    /// </summary>
+    /// <param name="oldDoorwayList"></param>
+    /// <returns></returns>
+    private List<Doorway> CopyDoorwayList(List<Doorway> oldDoorwayList)
+    {
+        List<Doorway> newDoorwayList = new List<Doorway>();
+
+        foreach(Doorway doorway in oldDoorwayList)
+        {
+            Doorway newDoorway = new Doorway();
+
+            newDoorway.position = doorway.position;
+            newDoorway.orientation = doorway.orientation;
+            newDoorway.doorPrefab = doorway.doorPrefab;
+            newDoorway.isConnected = doorway.isConnected;
+            newDoorway.isUnavailable = doorway.isUnavailable;
+            newDoorway.doorwayStartCopyPosition = doorway.doorwayStartCopyPosition;
+            newDoorway.doorwayCopyTileWidth = doorway.doorwayCopyTileWidth;
+            newDoorway.doorwayCopyTileHeight = doorway.doorwayCopyTileHeight;
+
+            newDoorwayList.Add(newDoorway);
+        }
+
+        return newDoorwayList;
+    }
+
+
+    /// <summary>
+    /// Create deep copy of string list
+    /// </summary>
+    /// <param name="oldStringList"></param>
+    /// <returns></returns>
+    private List<string> CopyStringList(List<string> oldStringList)
+    {
+        List<string> newStringList = new List<string>();
+
+        foreach(string stringValue in oldStringList)
+        {
+            newStringList.Add(stringValue);
+        }
+
+        return newStringList;
     }
 
     /// <summary>
