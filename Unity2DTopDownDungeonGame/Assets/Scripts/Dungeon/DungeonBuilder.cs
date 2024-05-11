@@ -212,12 +212,23 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             // place the room - returns true if the room doesn't overlap
             if (PlaceRoom(parentRoom, doorwayParent, room))
             {
+                // if room doesn't overlap then set to false to exit while loop
+                roomOverlaps = false;
 
+                // mark room as positioned 
+                room.isPositioned = true;
+
+                // add room to dictionary
+                dungeonBuilderRoomDictionary.Add(room.id, room);
+            }
+            else
+            {
+                roomOverlaps = true;
             }
 
         }
 
-        return true;
+        return true; // no roomoverlaps
     }
 
     private bool PlaceRoom(Room parentRoom, Doorway doorwayParent, Room room)
