@@ -80,6 +80,10 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         return true;
     }
 
+    /// <summary>
+    /// Instantiate the dungeon room gameobjects from prefabs
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
     private void InstantiateRoomGameObjects()
     {
         throw new NotImplementedException();
