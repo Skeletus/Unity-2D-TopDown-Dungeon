@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [DisallowMultipleComponent]
 public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
@@ -86,7 +87,33 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     /// <exception cref="NotImplementedException"></exception>
     private void InstantiateRoomGameObjects()
     {
-        throw new NotImplementedException();
+        // iterate through all dungeon rooms 
+        foreach(KeyValuePair<string, Room> keyValuePair in dungeonBuilderRoomDictionary)
+        {
+            Room room = keyValuePair.Value;
+
+            // calculate room position (remember the room instantiation position needs to be adjusted
+            // by the room template lower bounds)
+            Vector3 roomPosition = new Vector3(
+                (room.lowerBounds.x - room.templateLowerBounds.x),
+                (room.lowerBounds.y - room.templateLowerBounds.y),
+                0f
+                );
+
+            // instantiate room 
+            GameObject roomGameObject = Instantiate(room.prefab, roomPosition, Quaternion.identity, transform);
+
+            // get the instatiated room component from instantiate prefab
+            InstantiatedRoom instantiatedRoom = roomGameObject.GetComponentInChildren<InstantiatedRoom>();
+
+            instantiatedRoom.room = room;
+
+            // initialise the instatiated room
+            instantiatedRoom.Initialise(roomGameObject);
+
+            // save gameobject reference
+            room.instantiatedRoom = instantiatedRoom;
+        }
     }
 
     /// <summary>
