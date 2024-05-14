@@ -36,7 +36,60 @@ public class InstantiatedRoom : MonoBehaviour
     {
         PopulateTileMapMemberVariables(roomGameObject);
 
+        BlockOffUnusedDoorways();
+
         DisableCollisionTilemapRenderer();
+    }
+
+    /// <summary>
+    /// Block off unused doorways in the room
+    /// </summary>
+    private void BlockOffUnusedDoorways()
+    {
+        // loop through all doorways
+        foreach(Doorway doorway in room.doorwayList)
+        {
+            if (doorway.isConnected)
+            {
+                continue;
+            }
+
+            // block connected doorways using tiles on tilemaps
+            if (collisionTilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(collisionTilemap, doorway);
+            }
+            if (minimapTilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(minimapTilemap, doorway);
+            }
+            if (groundTilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(groundTilemap, doorway);
+            }
+            if (decoration1Tilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(decoration1Tilemap, doorway);
+            }
+            if (decoration2Tilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(decoration2Tilemap, doorway);
+            }
+            if (frontTilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(frontTilemap, doorway);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Bloack a doorway on tile map layer
+    /// </summary>
+    /// <param name="collisionTilemap"></param>
+    /// <param name="doorway"></param>
+    private void BlockADoorwayOnTilemapLayer(Tilemap collisionTilemap, Doorway doorway)
+    {
+
     }
 
     /// <summary>
