@@ -87,7 +87,39 @@ public class InstantiatedRoom : MonoBehaviour
     /// </summary>
     /// <param name="collisionTilemap"></param>
     /// <param name="doorway"></param>
-    private void BlockADoorwayOnTilemapLayer(Tilemap collisionTilemap, Doorway doorway)
+    private void BlockADoorwayOnTilemapLayer(Tilemap tilemap, Doorway doorway)
+    {
+        switch(doorway.orientation)
+        {
+            case Orientation.north:
+            case Orientation.south:
+                BlockDoorwayHorizontally(tilemap, doorway);
+                break;
+            case Orientation.east:
+            case Orientation.west:
+                BlockDoorwayVertically(tilemap, doorway);
+                break;
+            case Orientation.none:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Block doorway vertically - for east and west doorways
+    /// </summary>
+    /// <param name="tilemap"></param>
+    /// <param name="doorway"></param>
+    private void BlockDoorwayVertically(Tilemap tilemap, Doorway doorway)
+    {
+
+    }
+
+    /// <summary>
+    /// Block doorway horizontally - for north and south doorways
+    /// </summary>
+    /// <param name="tilemap"></param>
+    /// <param name="doorway"></param>
+    private void BlockDoorwayHorizontally(Tilemap tilemap, Doorway doorway)
     {
 
     }
