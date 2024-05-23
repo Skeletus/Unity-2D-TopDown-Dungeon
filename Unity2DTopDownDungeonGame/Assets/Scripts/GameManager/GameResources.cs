@@ -38,6 +38,11 @@ public class GameResources : MonoBehaviour
     #endregion
     public Material dimmedMaterial;
 
+    #region Tooltip
+    [Tooltip("Sprite-Lit-Default Material")]
+    #endregion
+    public Material litMaterial;
+
     #region Header SPECIAL TILEMAP TILES
     [Space(10)]
     [Header("SPECIAL TILEMAP TILES")]
@@ -57,6 +62,7 @@ public class GameResources : MonoBehaviour
     // validate the scriptable objects details entered
     private void OnValidate()
     {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(litMaterial), litMaterial);
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(enemyUnwalkableCollisionTilesArray), enemyUnwalkableCollisionTilesArray);
         HelperUtilities.ValidateCheckNullValue(this, nameof(preferredEnemyPathTile), preferredEnemyPathTile);
     }
