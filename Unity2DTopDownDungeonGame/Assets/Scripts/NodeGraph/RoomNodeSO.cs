@@ -14,14 +14,14 @@ public class RoomNodeSO : ScriptableObject
 
     #region EditorCode
 
-    // the following code should only be run in the unity editor
+    // todo el codigo de abajo solo debe ejecutarse en el editor de Unity
 #if UNITY_EDITOR
     [HideInInspector] public Rect rect;
     [HideInInspector] public bool isLeftClickingDragging = false;
     [HideInInspector] public bool isSelected = false;
 
     /// <summary>
-    /// Initialize Node
+    /// inicializar nodo
     /// </summary>
     /// <param name="rect"></param>
     /// <param name="nodeGraph"></param>
@@ -34,57 +34,60 @@ public class RoomNodeSO : ScriptableObject
         this.roomNodeGraph = nodeGraph;
         this.roomNodeType = roomNodeType;
 
-        // load room ndoe type list
+        // cargar lista de tipos de RoomNodes
         roomNodeTypeList = GameResources.Instance.roomNodeTypeList;
     }
 
     /// <summary>
-    /// Draw node with the nodeStyle
+    /// dibujar nodo con un estilo
     /// </summary>
     /// <param name="nodeStyle"></param>
     public void Draw(GUIStyle nodeStyle)
     {
-        // draw node box using begin area method
+        // dibujar la caja del nodo usando el metodo BeginArea
         GUILayout.BeginArea(rect , nodeStyle);
 
-        // start region to detect pop up selection changes
+        // iniciar la region para detectar cambios en la seleccion del pop-up
         EditorGUI.BeginChangeCheck();
 
-        // if the room node has a parent or is of type entrance then display a label else display a popup
+        // si el nodo tiene un padre o es de tipo entrada, mostrar una label, de lo contrario, mostrar un pop-up
         if (parentRoomNodeIDList.Count > 0 || roomNodeType.isEntrance)
         {
-            // display a label that can't be changed
+            // mostrar una label que no se puede cambiar
             EditorGUILayout.LabelField(roomNodeType.roomNodeTypeName);
         }
         else
         {
-            // display a pop up using the room node type values that can be selected from (default to the currently set room node type)
+            // mostrar un pop-up utilizando los valores del tipo de nodo que se pueden seleccionar
+            // (establecer por defecto al tipo de nodo actualmente configurado)
             int selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
 
             int selection = EditorGUILayout.Popup("", selected, GetRoomNodeTypeToDisplay());
 
             roomNodeType = roomNodeTypeList.list[selection];
 
-            // if the room type selection has changed making child connections potentially invalid
+            // si la seleccion del tipo de nodo ha cambiado,
+            // haciendo que las conexiones de los hijos sean potencialmente invalidas
             if (roomNodeTypeList.list[selected].isCorridor && !roomNodeTypeList.list[selection].isCorridor ||
                 !roomNodeTypeList.list[selected].isCorridor && roomNodeTypeList.list[selection].isCorridor ||
                 !roomNodeTypeList.list[selected].isBossRoom && roomNodeTypeList.list[selection].isBossRoom)
             {
-                // if a room node type has been changed and it already has children then delete the parent child links since we need to revalidate any
+                // si se ha cambiado el tipo de nodo y ya tiene hijos,
+                // eliminar los enlaces padre-hijo ya que necesitamos revalidar
                 if (childRoomNodeIDList.Count > 0)
                 {
                     for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--)
                     {
-                        // get chil room node
+                        // obtener el nodo hijo
                         RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childRoomNodeIDList[i]);
 
-                        // if the child room node it's not null
+                        // si el nodo hijo no es nulo
                         if (childRoomNode != null)
                         {
-                            // remove child ID from parent room node
+                            // eliminar ID hijo del nodo padre
                             RemoveChildRoomNodeIDFromRoomNode(childRoomNode.id);
 
-                            // remove parent ID from child room node
+                            // eliminar ID padre del nodo hijo
                             childRoomNode.RemoveParentRoomNodeIDFromRoomNode(id);
                         }
                     }
@@ -116,13 +119,13 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Add child ID to the node (returns true if the node has been added, false otherwise)
+    /// Agregar ID hijo al nodo (devuelve true si el nodo ha sido agregado, false en caso contrario)
     /// </summary>
     /// <param name="childID"></param>
     /// <returns></returns>
     public bool AddChildRoomNodeIDToRoomNode(string childID)
     {
-        // check child node can be added validly to parent
+        // verificar que el nodo hijo puede ser agregado al padre
         if (IsChildRoomValid(childID))
         {
             childRoomNodeIDList.Add(childID);
@@ -133,14 +136,15 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// check the child node can be validly added to the parent node - return true if it otherwise return false
+    /// verificar que el nodo hijo puede ser agregado al nodo padre - 
+    /// devuelve true si es así, en caso contrario devuelve false
     /// </summary>
     /// <param name="childID"></param>
     /// <returns></returns>
     private bool IsChildRoomValid(string childID)
     {
         bool isConnectedBossRoomAlready = false;
-        // check if there is already a connected boss room in the node graph
+        // verificar si ya hay un nodo de tipo boss-room conectado en el grafo
         foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList)
         {
             if (roomNode.roomNodeType.isBossRoom && roomNode.parentRoomNodeIDList.Count > 0)
@@ -149,68 +153,68 @@ public class RoomNodeSO : ScriptableObject
             }
         }
 
-        //if the child node has a type of boss room and there is already a connected boss room node then return false
+        // si el nodo hijo es de tipo boss-room y ya hay un nodo boss-room conectado, devolver false
         RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childID);
         if (childRoomNode.roomNodeType.isBossRoom && isConnectedBossRoomAlready)
         {
             return false;
         }
 
-        // if the child node has a type of none then return false;
+        // si el nodo hijo es de tipo ninguno, devolver false;
         if (childRoomNode.roomNodeType.isNone)
         {
             return false;
         }
 
-        // if the node already has a child with this child id return false
+        // si el nodo ya tiene un hijo con este ID hijo, devolver false
         if (childRoomNodeIDList.Contains(childID))
         {
             return false;
         }
 
-        // if the node id and the child id are the same return false
+        // si el ID del nodo y el ID del hijo son iguales, devolver false
         if (id == childID)
         {
             return false;
         }
 
-        // if this childID is already in the parentID list return false
+        // si este ID hijo ya esta en la lista de ID padres, devolver false
         if (parentRoomNodeIDList.Contains(childID))
         {
             return false;
         }
 
-        // if the child node already has a parent return false
+        // si el nodo hijo ya tiene un padre, devolver false
         if (childRoomNode.parentRoomNodeIDList.Count > 0)
         {
             return false;
         }
 
-        // if the child is a corridor and this node is a corridor return false
+        // si el hijo es un corridor y este nodo es un corridor, devolver false
         if (childRoomNode.roomNodeType.isCorridor && roomNodeType.isCorridor)
         {
             return false;
         }
 
-        // if the child is not a corridor and this node is not a corridor return false
+        // si el hijo no es un corridor y este nodo no es un corridor, devolver false
         if (!childRoomNode.roomNodeType.isCorridor && !roomNodeType.isCorridor)
         {
             return false;
         }
 
-        // if adding a corridor check that this node has < the maxium permited child corridors
+        // si se agrega un corridor, verificar que este nodo tenga menos del maximo permitido de corredores hijos, devolver false
         if (childRoomNode.roomNodeType.isCorridor && childRoomNodeIDList.Count >= Settings.maxChildCorridors)
         {
             return false;
         }
 
-        // if the child room is an entrance return false - the entrance must always be the top level parent node
+        // si el hijo es de tipo entrance, devolver false - el room entrance siempre debe ser el nodo padre de nivel superior
         if (childRoomNode.roomNodeType.isEntrance)
         {
             return false;
         }
 
-        // if adding a room to a corridor check that this corridor node doesn't already have a room node added
+        // si se agrega un room a un corredor, verificar que este nodo corridor no tenga ya un nodo room agregado
         if (!childRoomNode.roomNodeType.isCorridor && childRoomNodeIDList.Count > 0)
         {
             return false;
@@ -220,7 +224,7 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Add parent ID to the node (returns true if the node has been added, false otherwise)
+    /// Agregar ID padre al nodo (devuelve true si el nodo ha sido agregado, false en caso contrario)
     /// </summary>
     /// <param name="parentID"></param>
     /// <returns></returns>
@@ -231,13 +235,13 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// remove child ID from the node (returns true if the node has been removed, false otherwsie)
+    /// eliminar ID hijo del nodo (devuelve true si el nodo ha sido eliminado, false en caso contrario)
     /// </summary>
     /// <param name="childID"></param>
     /// <returns></returns>
     public bool RemoveChildRoomNodeIDFromRoomNode(string childID)
     {
-        // if the node contains the child ID then remove it
+        // si el nodo contiene el ID hijo, eliminarlo
         if (childRoomNodeIDList.Contains(childID))
         {
             childRoomNodeIDList.Remove(childID);
@@ -248,13 +252,13 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// remove parent ID from the node (returns true if the node has been removed, false otherwsie)
+    /// eliminar ID padre del nodo (devuelve true si el nodo ha sido eliminado, false en caso contrario)
     /// </summary>
     /// <param name="parentID"></param>
     /// <returns></returns>
     public bool RemoveParentRoomNodeIDFromRoomNode(string parentID)
     {
-        // if the node contains the parent ID then remove it
+        // si el nodo contiene el ID padre, eliminarlo
         if (parentRoomNodeIDList.Contains(parentID))
         {
             parentRoomNodeIDList.Remove(parentID);
@@ -265,22 +269,22 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Process events for the node
+    /// procesar eventos para el nodo
     /// </summary>
     /// <param name="currentEvent"></param>
     public void ProcessEvents(Event currentEvent)
     {
         switch ( currentEvent.type )
         {
-            // process mouse down events
+            // procesar eventos de mouse down
             case EventType.MouseDown:
                 ProcessMouseDownEvent(currentEvent);
                 break;
-            // process mouse down events
+            // procesar eventos de mouse up
             case EventType.MouseUp:
                 ProcessMouseUpEvent(currentEvent);
                 break;
-            // process mouse down events
+            // procesar eventos de mouse drag
             case EventType.MouseDrag:
                 ProcessMouseDragEvent(currentEvent);
                 break;
@@ -291,12 +295,12 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Process mouse drag event
+    /// procesar evento de mouse drag
     /// </summary>
     /// <param name="currentEvent"></param>
     private void ProcessMouseDragEvent(Event currentEvent)
     {
-        // process left click drag event
+        // procesar evento de drag con click izquierdo
         if (currentEvent.button == 0)
         {
             ProcessLeftMouseDragEvent(currentEvent);
@@ -304,7 +308,7 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Process left mouse drag event
+    /// procesar evento de drag con click izquierdo
     /// </summary>
     /// <param name="currentEvent"></param>
     private void ProcessLeftMouseDragEvent(Event currentEvent)
@@ -316,7 +320,7 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Drag Node
+    /// arrastrar Nodo
     /// </summary>
     /// <param name="delta"></param>
     public void DragNode(Vector2 delta)
@@ -326,7 +330,7 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Process mouse up events
+    /// procesar eventos de mouse up
     /// </summary>
     /// <param name="currentEvent"></param>
     private void ProcessMouseUpEvent(Event currentEvent)
@@ -339,7 +343,7 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Process left click up events
+    /// procesar eventos de mouse up de clic izquierdo
     /// </summary>
     private void ProcessLeftClickUpEvent()
     {
@@ -350,17 +354,17 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Process mouse down events
+    /// procesar eventos de mouse down
     /// </summary>
     /// <param name="currentEvent"></param>
     private void ProcessMouseDownEvent(Event currentEvent)
     {
-        // left click down
+        // clic izquierdo abajo
         if (currentEvent.button == 0)
         {
             ProcessLeftClickDownEvents();
         }
-        // right click down 
+        // clic derecho abajo 
         else if (currentEvent.button == 1)
         {
             ProcessRightClickDownEvents(currentEvent);
@@ -368,7 +372,7 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Process right click down events
+    /// procesar eventos de mouse down de clic derecho
     /// </summary>
     private void ProcessRightClickDownEvents(Event currentEvent)
     {
@@ -376,14 +380,14 @@ public class RoomNodeSO : ScriptableObject
     }
 
     /// <summary>
-    /// Process left click down event
+    /// procesar eventos de mouse down de clic izquierdo
     /// </summary>
     /// <exception cref="NotImplementedException"></exception>
     private void ProcessLeftClickDownEvents()
     {
         Selection.activeObject = this;
 
-        // toggle node selection
+        // alternar seleccion del nodo
         if (isSelected == true)
         {
             isSelected = false;
