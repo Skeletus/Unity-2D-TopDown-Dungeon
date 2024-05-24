@@ -6,7 +6,7 @@ using UnityEngine;
 public static class HelperUtilities
 {
     /// <summary>
-    /// Empty string debug check
+    /// verificacion de un string vacio
     /// </summary>
     /// <param name="thisObject"></param>
     /// <param name="fieldName"></param>
@@ -16,14 +16,14 @@ public static class HelperUtilities
     {
         if (stringToCheck == "")
         {
-            Debug.Log(fieldName + " is empty and must contain a value in object " + thisObject.name.ToString());
+            Debug.Log(fieldName + " esta vacio y debe contener un valor en el objeto " + thisObject.name.ToString());
             return true;
         }
         return false;
     }
 
     /// <summary>
-    /// List empty or contains null value check - returns true if there's an error
+    /// verificacion de lista vacia o que contiene valores nulos - devuelve true si hay un error
     /// </summary>
     /// <param name="thisObject"></param>
     /// <param name="fieldName"></param>
@@ -36,7 +36,7 @@ public static class HelperUtilities
 
         if (enumerableObjectsToCheck == null)
         {
-            Debug.Log(fieldName + " is null in object " + thisObject.name.ToString());
+            Debug.Log(fieldName + " es nulo en el objeto " + thisObject.name.ToString());
             return true;
         }
 
@@ -44,7 +44,7 @@ public static class HelperUtilities
         {
             if (item == null)
             {
-                Debug.Log(fieldName + " has null values in object " + thisObject.name.ToString());
+                Debug.Log(fieldName + " tiene valores nulos en el objeto " + thisObject.name.ToString());
                 error = true;
             }
             else
@@ -55,7 +55,7 @@ public static class HelperUtilities
 
         if (count == 0)
         {
-            Debug.Log(fieldName + " has no values in object " + thisObject.name.ToString());
+            Debug.Log(fieldName + " no tiene valores en el objeto " + thisObject.name.ToString());
             error = true;
         }
 
