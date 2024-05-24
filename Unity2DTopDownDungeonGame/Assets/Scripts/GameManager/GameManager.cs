@@ -12,13 +12,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #endregion Header DUNGEON LEVELS
 
     #region Tooltip
-    [Tooltip("Populate with the dungeon level scriptable objects")]
+    [Tooltip("Rellena con los objetos scriptables de nivel de dungeon")]
     #endregion Tooltip
 
     [SerializeField] private List<DungeonLevelSO> dungeonLevelList;
 
     #region Tooltip
-    [Tooltip("Populate with the starting dungeon level for testing, first level = 0")]
+    [Tooltip("Rellena con el nivel de dungeon inicial para pruebas, primer nivel = 0")]
     #endregion Tooltip
 
     [SerializeField] private int currentDungeonLevelListIndex = 0;
@@ -41,15 +41,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     }
 
     /// <summary>
-    /// Handle game state
+    /// Maneja el estado del juego
     /// </summary>
     private void HandleGameState()
     {
-        // handle game state
-        switch(gameState)
+        // cambia el estado del juego
+        switch (gameState)
         {
             case GameState.gameStarted:
-                // play first level
+                // juega el nivel actual de acuerdo al establecido en el indice
                 PlayDungeonLevel(currentDungeonLevelListIndex);
 
                 gameState = GameState.playingLevel;
@@ -60,21 +60,21 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void PlayDungeonLevel(int currentDungeonLevelListIndex)
     {
-        // build dungeon for level
+        // construye la dungeon para el nivel
         bool dungeonBuiltSuccessfully = DungeonBuilder.Instance.GenerateDungeon(dungeonLevelList[currentDungeonLevelListIndex]);
         
         if (!dungeonBuiltSuccessfully)
         {
-            Debug.LogError("Couldn't build dungeon from specified rooms and node graphs");
+            Debug.LogError("No se pudo construir la dungeon con los rooms y RoomNodeGraph especificados");
         }
     }
 
-    #region Validation
+    #region Validaciones
 #if UNITY_EDITOR
     private void OnValidate()
     {
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(dungeonLevelList), dungeonLevelList);
     }
 #endif
-    #endregion Validation
+    #endregion Validaciones
 }

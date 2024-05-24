@@ -23,7 +23,7 @@ public class GameResources : MonoBehaviour
     [Header("DUNGEON")]
     #endregion
     #region Tooltip
-    [Tooltip("Populate with the dungeon RoomNodeTypeList Scriptable Object")]
+    [Tooltip("Rellena con el Scriptable Object RoomNodeTypeList")]
     #endregion
 
     public RoomNodeTypeListSO roomNodeTypeList;
