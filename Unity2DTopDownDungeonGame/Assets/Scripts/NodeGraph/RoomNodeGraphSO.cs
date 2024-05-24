@@ -16,21 +16,21 @@ public class RoomNodeGraphSO : ScriptableObject
     }
 
     /// <summary>
-    /// Load the room node dictionary from the room node list
+    /// Cargar el diccionario de nodos desde la lista de nodos 
     /// </summary>
     private void LoadRoomNodeDictionary()
     {
         roomNodeDictionary.Clear();
 
-        // populate dictionary
-        foreach(RoomNodeSO node in roomNodeList)
+        // llenar el diccionario
+        foreach (RoomNodeSO node in roomNodeList)
         {
             roomNodeDictionary[node.id] = node;
         }
     }
 
     /// <summary>
-    /// Get Room node by room node type
+    /// obtener nodo por tipo de nodo
     /// </summary>
     /// <param name="roomNodeType"></param>
     /// <returns></returns>
@@ -47,7 +47,7 @@ public class RoomNodeGraphSO : ScriptableObject
     }
 
     /// <summary>
-    /// Get room by room nodeID
+    /// obtener nodo por ID de nodo
     /// </summary>
     /// <param name="roomNodeID"></param>
     /// <returns></returns>
@@ -61,7 +61,7 @@ public class RoomNodeGraphSO : ScriptableObject
     }
 
     /// <summary>
-    /// Get child room nodes for upload parent room node
+    /// obtener nodos hijos para cargar nodo padre
     /// </summary>
     /// <param name="parentRoomNode"></param>
     /// <returns></returns>
@@ -80,7 +80,7 @@ public class RoomNodeGraphSO : ScriptableObject
     [HideInInspector] public RoomNodeSO roomNodeToDrawLineFrom = null;
     [HideInInspector] public Vector2 linePosition;
 
-    // repopulate node dictionary every time a change is made in the editor
+    // volver a llenar el diccionario de nodos cada vez que se haga un cambio en el editor
     public void OnValidate()
     {
         LoadRoomNodeDictionary();

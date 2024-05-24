@@ -8,35 +8,35 @@ public class RoomNodeTypeSO : ScriptableObject
     public string roomNodeTypeName;
 
     #region Header
-    [Header("Only flag the RoomNode Types that should be visible in the editor")]
+    [Header("Marcar solo los tipos de RoomNode que deben ser visibles en el editor")]
     #endregion Header
     public bool displayInNodeGraphEditor = true;
     #region Header
-    [Header("One type should be a corridor")]
+    [Header("Un tipo deberia ser un corridor")]
     #endregion Header
     public bool isCorridor;
     #region Header
-    [Header("One type should be a corridor North South")]
+    [Header("Un tipo deberia ser un corridor North-South")]
     #endregion Header
     public bool isCorridorNS;
     #region Header
-    [Header("One type should be a corridor East West")]
+    [Header("Un tipo deberia ser un corridor East-West")]
     #endregion Header
     public bool isCorridorEW;
     #region Header
-    [Header("One type should be an Entrance")]
+    [Header("Un tipo deberia ser una Entrance")]
     #endregion
     public bool isEntrance;
     #region Header
-    [Header("One type should be a Boss Room")]
+    [Header("Un tipo deberia ser un Boss-Room")]
     #endregion
     public bool isBossRoom;
     #region Header
-    [Header("One type should be None (Unassigned)")]
+    [Header("Un tipo deberia ser None (Sin Asignar)")]
     #endregion
     public bool isNone;
 
-    #region Validation
+    #region Validacion
 #if UNITY_EDITOR
     private void OnValidate()
     {

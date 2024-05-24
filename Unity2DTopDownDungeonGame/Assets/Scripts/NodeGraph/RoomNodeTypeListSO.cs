@@ -5,16 +5,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RoomNodeTypeListSO", menuName = "Scriptable Objects/Dungeon/Room Node Type List")]
 public class RoomNodeTypeListSO : ScriptableObject
 {
-    #region Header ROOM NODE TYPE LIST
+    #region Header LISTA_DE_TIPOS_DE_NODO 
     [Space(10)]
-    [Header("ROOM NODE TYPE LIST")]
+    [Header("LISTA DE TIPOS DE NODO")]
     #endregion
     #region ToolTip
-    [Tooltip("This list should be populated with all the RoomNodeType Scriptable Objects - it's used insted of a enum")]
+    [Tooltip("Esta lista debe estar llena con todos los Scriptable Objects 'RoomNodeType'")]
     #endregion
     public List<RoomNodeTypeSO> list;
 
-    #region Validation
+    #region Validacion
 #if UNITY_EDITOR
     private void OnValidate()
     {
