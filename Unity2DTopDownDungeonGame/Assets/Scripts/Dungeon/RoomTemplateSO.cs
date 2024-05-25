@@ -16,25 +16,27 @@ public class RoomTemplateSO : ScriptableObject
 
     #region Tooltip
 
-    [Tooltip("The gameobject prefab for the room (this will contain all the tilemaps for the room and environment game objects")]
+    [Tooltip("El prefab del gameobject para el room (este contendra todos los tilemaps del room y los objetos del entorno)")]
 
     #endregion Tooltip
 
     public GameObject prefab;
 
-    [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the guid if the so is copied and the prefab is changed
+    // se usa para regenerar el GUID (global unique identifier)
+    // si el objeto ScriptableObject (SO) se copia y el prefab se cambia.
+    [HideInInspector] public GameObject previousPrefab;
 
 
-    #region Header ROOM CONFIGURATION
+    #region Header CONFIGURACION ROOM
 
     [Space(10)]
-    [Header("ROOM CONFIGURATION")]
+    [Header("CONFIGURACION ROOM")]
 
-    #endregion Header ROOM CONFIGURATION
+    #endregion Header CONFIGURACION ROOM
 
     #region Tooltip
 
-    [Tooltip("The room node type SO. The room node types correspond to the room nodes used in the room node graph.  The exceptions being with corridors.  In the room node graph there is just one corridor type 'Corridor'.  For the room templates there are 2 corridor node types - CorridorNS and CorridorEW.")]
+    [Tooltip("El room node type SO. Los tipos de room node corresponden a los room nodes usados en el grafo. Las excepciones son con los corridors. En el grafo solo hay tipo de corridor llamado 'Corridor'. Para las room templates hay 2 tipos de corridor - CorridorNS y CorridorEW.")]
 
     #endregion Tooltip
 
@@ -42,7 +44,7 @@ public class RoomTemplateSO : ScriptableObject
 
     #region Tooltip
 
-    [Tooltip("If you imagine a rectangle around the room tilemap that just completely encloses it, the room lower bounds represent the bottom left corner of that rectangle. This should be determined from the tilemap for the room (using the coordinate brush pointer to get the tilemap grid position for that bottom left corner (Note: this is the local tilemap position and NOT world position")]
+    [Tooltip("Si imaginas un rectangulo alrededor del room tilemap que lo encierra por completo, El room lower bounds representan la esquina inferior izquierda de ese rectangulo. Este debe determinarse a partir del tilemap para el room")]
 
     #endregion Tooltip
 
@@ -50,7 +52,7 @@ public class RoomTemplateSO : ScriptableObject
 
     #region Tooltip
 
-    [Tooltip("If you imagine a rectangle around the room tilemap that just completely encloses it, the room upper bounds represent the top right corner of that rectangle. This should be determined from the tilemap for the room (using the coordinate brush pointer to get the tilemap grid position for that top right corner (Note: this is the local tilemap position and NOT world position")]
+    [Tooltip("Si imaginas un rectangulo alrededor del room tilemap que lo encierra por completo, El room upper bounds representan la esquina superior derecha de ese rectangulo. Este debe determinarse a partir del tilemap para el room")]
 
     #endregion Tooltip
 
@@ -58,7 +60,7 @@ public class RoomTemplateSO : ScriptableObject
 
     #region Tooltip
 
-    [Tooltip("There should be a maximum of four doorways for a room - one for each compass direction.  These should have a consistent 3 tile opening size, with the middle tile position being the doorway coordinate 'position'")]
+    [Tooltip("Debe haber un max de 4 doorways para un room - una para cada direccion (NSEW).  Estas deben tener un tamanio de 3 tile de apertura,siendo la posicion del tile medio la 'position' del doorway")]
 
     #endregion Tooltip
 
@@ -66,14 +68,14 @@ public class RoomTemplateSO : ScriptableObject
 
     #region Tooltip
 
-    [Tooltip("Each possible spawn position (used for enemies and chests) for the room in tilemap coordinates should be added to this array")]
+    [Tooltip("Cada posible posicion de aparicion (usada para enemigos o cofres) para el room en las coordenadas del tilemap debe ser agregada al arreglo")]
 
     #endregion Tooltip
 
     public Vector2Int[] spawnPositionArray;
 
     /// <summary>
-    /// Returns the list of Entrances for the room template
+    /// devuelve la lista de Doorways para el room template
     /// </summary>
     public List<Doorway> GetDoorwayList()
     {
@@ -84,10 +86,10 @@ public class RoomTemplateSO : ScriptableObject
 
 #if UNITY_EDITOR
 
-    // Validate SO fields
+    // validacion de campos
     private void OnValidate()
     {
-        // Set unique GUID if empty or the prefab changes
+        // settear el GUID si esta vacio o si hay cambios en el prefab
         if (guid == "" || previousPrefab != prefab)
         {
             guid = GUID.Generate().ToString();
@@ -97,7 +99,7 @@ public class RoomTemplateSO : ScriptableObject
 
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(doorwayList), doorwayList);
 
-        // Check spawn positions populated
+        // verificacion de puntos de aparicion (spawn position array)
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(spawnPositionArray), spawnPositionArray);
     }
 

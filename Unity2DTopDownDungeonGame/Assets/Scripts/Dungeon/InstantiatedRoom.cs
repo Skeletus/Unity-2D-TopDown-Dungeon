@@ -24,12 +24,12 @@ public class InstantiatedRoom : MonoBehaviour
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
 
-        // save room collider bounds
+        // guardar limites del collider del room
         roomColliderBounds = boxCollider2D.bounds;
     }
 
     /// <summary>
-    /// Initialise the instatiated room
+    /// inicializar Instantiated Room
     /// </summary>
     /// <param name="roomGameObject"></param>
     public void Initialise(GameObject roomGameObject)
@@ -42,11 +42,11 @@ public class InstantiatedRoom : MonoBehaviour
     }
 
     /// <summary>
-    /// Block off unused doorways in the room
+    /// bloquear doorways sin utilizar en el room
     /// </summary>
     private void BlockOffUnusedDoorways()
     {
-        // loop through all doorways
+        // recorrer todas las doorways
         foreach(Doorway doorway in room.doorwayList)
         {
             if (doorway.isConnected)
@@ -54,7 +54,7 @@ public class InstantiatedRoom : MonoBehaviour
                 continue;
             }
 
-            // block connected doorways using tiles on tilemaps
+            // bloquear doorways conectadas usando tiles en tilemaps
             if (collisionTilemap != null)
             {
                 BlockADoorwayOnTilemapLayer(collisionTilemap, doorway);
@@ -83,7 +83,7 @@ public class InstantiatedRoom : MonoBehaviour
     }
 
     /// <summary>
-    /// Bloack a doorway on tile map layer
+    /// bloquear un doorway en el layer de tilemap
     /// </summary>
     /// <param name="collisionTilemap"></param>
     /// <param name="doorway"></param>
@@ -105,7 +105,7 @@ public class InstantiatedRoom : MonoBehaviour
     }
 
     /// <summary>
-    /// Block doorway vertically - for east and west doorways
+    /// bloquear doorway verticalmente - para doorways EAST y WEAST
     /// </summary>
     /// <param name="tilemap"></param>
     /// <param name="doorway"></param>
@@ -113,12 +113,12 @@ public class InstantiatedRoom : MonoBehaviour
     {
         Vector2Int startPosition = doorway.doorwayStartCopyPosition;
 
-        // loop through all tiles to copy
+        // recorrer todas las tiles a copiar
         for (int yPos = 0; yPos < doorway.doorwayCopyTileHeight; yPos++)
         {
             for (int xPos = 0; xPos < doorway.doorwayCopyTileWidth; xPos++)
             {
-                // get rotation of tile being copied
+                // capturar la rotacion del tile que esta siendo copiado
                 Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(
                     new Vector3Int
                     (startPosition.x + xPos,
@@ -126,21 +126,21 @@ public class InstantiatedRoom : MonoBehaviour
                     0)
                     );
 
-                // copy tile
+                // copiar tile
                 Vector3Int positionTile = new Vector3Int(
                     startPosition.x + xPos,
                     startPosition.y - 1 - yPos,
                     0);
                 tilemap.SetTile(positionTile, tilemap.GetTile(new Vector3Int(startPosition.x + xPos, startPosition.y - yPos, 0)));
 
-                // set rotation of tile copied
+                // establecer rotacion del tile copiado
                 tilemap.SetTransformMatrix(new Vector3Int(startPosition.x + xPos, startPosition.y - 1 - yPos, 0), transformMatrix);
             }
         }
     }
 
     /// <summary>
-    /// Block doorway horizontally - for north and south doorways
+    /// bloquear doorway horizontalmente - para doorways NORTH y SOUTH
     /// </summary>
     /// <param name="tilemap"></param>
     /// <param name="doorway"></param>
@@ -148,12 +148,12 @@ public class InstantiatedRoom : MonoBehaviour
     {
         Vector2Int startPosition = doorway.doorwayStartCopyPosition;
 
-        // loop through all tiles to copy
+        // recorrer todas las tiles a copiar
         for (int xPos = 0; xPos < doorway.doorwayCopyTileWidth; xPos++)
         {
             for (int yPos = 0; yPos < doorway.doorwayCopyTileHeight; yPos++)
             {
-                // get rotation of tile being copied
+                // capturar la rotacion del tile que esta siendo copiado
                 Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(
                     new Vector3Int
                     (startPosition.x + xPos,
@@ -161,38 +161,39 @@ public class InstantiatedRoom : MonoBehaviour
                     0)
                     );
 
-                // copy tile
+                // copiar tile
                 Vector3Int positionTile = new Vector3Int(
                     startPosition.x + 1 + xPos,
                     startPosition.y - yPos,
                     0);
                 tilemap.SetTile(positionTile, tilemap.GetTile(new Vector3Int(startPosition.x + xPos, startPosition.y - yPos, 0)));
 
-                // set rotation of tile copied
+                // establecer rotacion del tile copiado
                 tilemap.SetTransformMatrix(new Vector3Int(startPosition.x + 1 + xPos, startPosition.y - yPos, 0), transformMatrix );
             }
         }
     }
 
     /// <summary>
-    /// Disable collision tilemap renderer
+    /// desactivar collision tilemap renderer
     /// </summary>
     private void DisableCollisionTilemapRenderer()
     {
-        // disable collision tilemap render
+        // desactiva la collision tilemap render
         collisionTilemap.gameObject.GetComponent<TilemapRenderer>().enabled = false;
     }
 
     /// <summary>
-    /// populate the tilemap and grid variables
+    /// llenar las variables el tilemap y el grid (cuadricula)
     /// </summary>
     /// <param name="roomGameObject"></param>
     private void PopulateTileMapMemberVariables(GameObject roomGameObject)
     {
+        // capturar el grid component
         // get the grid Component
         grid = roomGameObject.GetComponentInChildren<Grid>();
 
-        // get tilemaps in children
+        // capturar los tilemaps de los hijos
         Tilemap[] tilemaps = roomGameObject.GetComponentsInChildren<Tilemap>();
 
         foreach(Tilemap tilemap in tilemaps) 

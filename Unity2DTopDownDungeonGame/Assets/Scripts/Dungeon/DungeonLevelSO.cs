@@ -5,45 +5,45 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DungeonLevel_", menuName = "Scriptable Objects/Dungeon/Dungeon Level")]
 public class DungeonLevelSO : ScriptableObject
 {
-    #region Header BASIC LEVEL DETAILS
+    #region Header DETALLES_BASICOS_NIVEL
     [Space(10)]
-    [Header("Basic Level Details")]
-    #endregion Header BASIC LEVEL DETAILS
+    [Header("DETALLES BASICOS DEL NIVEL")]
+    #endregion Header DETALLES_BASICOS_NIVEL
 
     #region Tooltip
-    [Tooltip("The name for the level")]
+    [Tooltip("Nombre del nivel")]
     #endregion Tooltip
 
     public string levelName;
 
-    #region Header ROOM TEMPLATES FOR LEVEL
+    #region Header ROOM_TEMPLATES_PARA_EL_NIVEL
     [Space(10)]
-    [Header("Room templates for level")]
-    #endregion Header ROOM TEMPLATES FOR LEVEL
+    [Header("Lista de Room templates para el nivel")]
+    #endregion Header ROOM_TEMPLATES_PARA_EL_NIVEL
 
     #region Tooltip
-    [Tooltip("Populate the list with the room templates that you want to be part of the level" +
-        "You need to ensure that room templates are included for all room nodes types " +
-        "that are specified in the room node graphs for the level")]
+    [Tooltip("Llenar la lista con los room templates q quieres q sean parte del nivel" +
+        "Asegurate q lo room templates esten incluidos para todos los room nodes types " +
+        "que son espcificados en el grafo para el nivel")]
     #endregion Tooltip
 
     public List<RoomTemplateSO> roomTemplateList;
 
-    #region Header ROOM NODE GRAPHS FOR LEVEL
+    #region Header GRAFOS_PARA_EL_NIVEL
     [Space(10)]
-    [Header("Room node graphs for level")]
+    [Header("Grafos para el nivel")]
     #endregion
 
     #region Toolip
-    [Tooltip("Populate this list with the room node graphs which should be randomly from for the level")]
+    [Tooltip("Lllena esta lista con los grafos que deben ser aleatorios para el nivel")]
     #endregion Tooltip
 
     public List<RoomNodeGraphSO> roomNodeGraphList;
 
-    #region Validation
+    #region VALIDACIONES
 #if UNITY_EDITOR
 
-    // validate scriptable object details entered
+    // validar detalles en los scriptable objetcs
     private void OnValidate()
     {
         HelperUtilities.ValidateCheckEmptyStrings(this, nameof(levelName), levelName);
@@ -58,14 +58,14 @@ public class DungeonLevelSO : ScriptableObject
             return;
         }
 
-        // check to make sure all the templates are specified for all the node types in the specified node graph
+        // verificar para segurar que todos los templates esten especificados para todos los tipos de nodos en el grafo especificado
 
-        // first check that north/south corridor , east/west corridor and entrance types have been specified
+        // primer revisar los corridor north/south, east/west y la entrance han sido especificados
         bool isEWCorridor = false;
         bool isNSCorridor = false;
         bool isEntrance = false;
 
-        // looop throguh all room templates to check that this node type has been specified
+        // recorre todos los room template para revisar que este tipo de nodo ha sido especificado
         foreach(RoomTemplateSO roomTemplateSO in roomTemplateList)
         {
             if (roomTemplateSO == null)
@@ -91,18 +91,18 @@ public class DungeonLevelSO : ScriptableObject
 
         if (isEWCorridor == false )
         {
-            Debug.Log("In " + this.name.ToString() + " : No E/W Corridor Room Type Specified");
+            Debug.Log("En " + this.name.ToString() + " : No se especifico el room type E/W Corridor");
         }
         if (isNSCorridor == false)
         {
-            Debug.Log("In " + this.name.ToString() + " : No S/N Corridor Room Type Specified");
+            Debug.Log("En " + this.name.ToString() + " : No se especifico el room type N/S Corridor");
         }
         if (isEntrance == false)
         {
-            Debug.Log("In " + this.name.ToString() + " : No Entrance Room Type Specified");
+            Debug.Log("En " + this.name.ToString() + " : No se especifico el room Type Entrance");
         }
 
-        // loop throguh all node graphs
+        // recorre todos los grafos
         foreach(RoomNodeGraphSO roomNodeGraph in roomNodeGraphList)
         {
             if (roomNodeGraph == null)
@@ -110,7 +110,7 @@ public class DungeonLevelSO : ScriptableObject
                 return;
             }
 
-            // loop through all nodes in node graph
+            // recorre todos los nodos en el grafo 
             foreach(RoomNodeSO roomNodeSO in roomNodeGraph.roomNodeList)
             {
                 if (roomNodeSO == null)
@@ -118,9 +118,9 @@ public class DungeonLevelSO : ScriptableObject
                     continue;
                 }
 
-                // check that a room template has been specified for each room node type
+                // verifica que el room template ha sido especificado para cada room node type
 
-                // corridors and entrance already checked
+                // corridors y entrance ya han sido verificados
                 if (roomNodeSO.roomNodeType.isEntrance || roomNodeSO.roomNodeType.isCorridorEW ||
                     roomNodeSO.roomNodeType.isCorridorNS || roomNodeSO.roomNodeType.isCorridor ||
                     roomNodeSO.roomNodeType.isNone)
@@ -146,12 +146,12 @@ public class DungeonLevelSO : ScriptableObject
 
                 if (!isRoomNodeTypeFound)
                 {
-                    Debug.Log("In " + this.name.ToString() + " : No room template " + roomNodeSO.roomNodeType.name.ToString() +
-                        " found for node graph " + roomNodeGraph.name.ToString());
+                    Debug.Log("En " + this.name.ToString() + " : no se encontro un room template " + roomNodeSO.roomNodeType.name.ToString() +
+                        " para el grafo " + roomNodeGraph.name.ToString());
                 }
             }
         }
     }
 #endif
-    #endregion Validation
+    #endregion VALIDACIONES
 }

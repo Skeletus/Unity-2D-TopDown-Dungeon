@@ -6,15 +6,15 @@ public class Doorway
     public Orientation orientation;
     public GameObject doorPrefab;
     #region Header
-    [Header("The Upper Left Position To Start Copying From")]
+    [Header("La posición superior izquierda desde la que empieza a copiar")]
     #endregion
     public Vector2Int doorwayStartCopyPosition;
     #region Header
-    [Header("The width of tiles in the doorway to copy over")]
+    [Header("El ancho de las tiles en las doorway para copiar")]
     #endregion
     public int doorwayCopyTileWidth;
     #region Header
-    [Header("The height of tiles in the doorway to copy over")]
+    [Header("La altura de las tiles en las doorway para copiar")]
     #endregion
     public int doorwayCopyTileHeight;
     [HideInInspector]
