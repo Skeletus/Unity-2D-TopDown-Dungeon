@@ -23,6 +23,23 @@ public static class HelperUtilities
     }
 
     /// <summary>
+    /// null value debug check
+    /// </summary>
+    /// <param name="thisObject"></param>
+    /// <param name="fieldName"></param>
+    /// <param name="objectToCheck"></param>
+    /// <returns></returns>
+    public static bool ValidateCheckNullValues(Object thisObject, string fieldName, UnityEngine.Object objectToCheck)
+    {
+        if (objectToCheck == null)
+        {
+            Debug.Log(fieldName + " is null and must contain a value in object " + thisObject.name.ToString());
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// List empty or contains null value check - returns true if there's an error
     /// </summary>
     /// <param name="thisObject"></param>
