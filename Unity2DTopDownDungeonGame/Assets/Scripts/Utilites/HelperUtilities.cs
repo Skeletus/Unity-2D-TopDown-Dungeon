@@ -78,4 +78,36 @@ public static class HelperUtilities
 
         return error;
     }
+
+    /// <summary>
+    /// positive value debug check - if zero is allowed set isZeroAllowed to true
+    /// returns true if there is an error
+    /// </summary>
+    /// <param name="thisObject"></param>
+    /// <param name="fieldName"></param>
+    /// <param name="valueToCheck"></param>
+    /// <param name="isZeroAllowed"></param>
+    /// <returns></returns>
+    public static bool ValidateCheckPositiveValues(Object thisObject, string fieldName, int valueToCheck, bool isZeroAllowed)
+    {
+        bool error = false;
+
+        if (isZeroAllowed)
+        {
+            if (valueToCheck < 0)
+            {
+                Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
+                error = true;
+            }
+        }
+        else
+        {
+            if (valueToCheck <= 0)
+            {
+                Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
+                error = true;
+            }
+        }
+        return error;
+    }
 }
