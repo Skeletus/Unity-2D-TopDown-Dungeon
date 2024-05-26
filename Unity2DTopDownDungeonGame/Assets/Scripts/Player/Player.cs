@@ -14,5 +14,16 @@ using UnityEngine.Rendering;
 #endregion REQUIRE COMPONENTS
 public class Player : MonoBehaviour
 {
+    [HideInInspector] public PlayerDetailsSO playerDetails;
+    [HideInInspector] public Health health;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
+    [HideInInspector] public Animator animator;
 
+    private void Awake()
+    {
+        // load components
+        health = GetComponent<Health>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+    }
 }
