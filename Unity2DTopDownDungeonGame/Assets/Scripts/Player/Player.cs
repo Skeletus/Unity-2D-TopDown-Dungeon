@@ -26,4 +26,24 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
+
+    /// <summary>
+    /// Initialize player
+    /// </summary>
+    /// <param name="playerDetails"></param>
+    public void Initialize(PlayerDetailsSO playerDetails)
+    {
+        this.playerDetails = playerDetails;
+
+        // set the player starting health
+        SetPlayerHealth();
+    }
+
+    /// <summary>
+    /// set player health from player details scriptable object
+    /// </summary>
+    private void SetPlayerHealth()
+    {
+        health.SetStartingHealth(playerDetails.playerHealthAmount);
+    }
 }
