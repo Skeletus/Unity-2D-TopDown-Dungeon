@@ -43,6 +43,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TheThief
       objectReference: {fileID: 0}
+    - target: {fileID: 3058356927663575529, guid: bad7472aa0e087a4e8de8b0b7a46d541, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 01d96898b20f477469c030bf1dcee9c0, type: 2}
     - target: {fileID: 3058356927663575530, guid: bad7472aa0e087a4e8de8b0b7a46d541, type: 3}
       propertyPath: m_Sprite
       value: 
