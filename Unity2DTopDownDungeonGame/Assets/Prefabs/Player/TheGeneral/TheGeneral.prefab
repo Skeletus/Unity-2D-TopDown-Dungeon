@@ -9,8 +9,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3058356927663575523, guid: bad7472aa0e087a4e8de8b0b7a46d541, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: TheGeneral
       objectReference: {fileID: 0}
+    - target: {fileID: 3058356927663575529, guid: bad7472aa0e087a4e8de8b0b7a46d541, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e87ce176a15556c459b355908992b930, type: 2}
     - target: {fileID: 3058356927663575532, guid: bad7472aa0e087a4e8de8b0b7a46d541, type: 3}
       propertyPath: m_RootOrder
       value: 0
