@@ -25,6 +25,22 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     [HideInInspector] public GameState gameState;
 
+    private Room currentRoom;
+    private Room previousRoom;
+    private PlayerDetailsSO playerDetails;
+    private Player player;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        // set the player details - saved in current player scriptable object from the main menu
+        playerDetails = GameResources.Instance.currentPlayerSO.playerDetails;
+
+        // instantiate player
+        InstantiatePlayer();
+    }
+
     private void Start()
     {
         gameState = GameState.gameStarted;
@@ -38,6 +54,25 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             gameState = GameState.gameStarted;
         }
+    }
+
+    /// <summary>
+    /// Set the current room the player is in
+    /// </summary>
+    /// <param name="room"></param>
+    public void SetCurrentRoom(Room room)
+    {
+        previousRoom = currentRoom;
+        currentRoom = room;
+    }
+
+    /// <summary>
+    /// Get the current room the player is in
+    /// </summary>
+    /// <returns></returns>
+    public Room GetCurrentRoom()
+    {
+        return currentRoom;
     }
 
     /// <summary>
@@ -67,6 +102,29 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             Debug.LogError("Couldn't build dungeon from specified rooms and node graphs");
         }
+
+        // set the player roughly mid position
+        player.gameObject.transform.position = new Vector3(
+            (currentRoom.lowerBounds.x + currentRoom.upperBounds.x) / 2f,
+            (currentRoom.lowerBounds.y + currentRoom.upperBounds.y) / 2f,
+            0f);
+
+        // get nearest spawn point in room nearest to player
+        player.gameObject.transform.position = HelperUtilities.GetSpawnPositionNearestToPlayer(player.gameObject.transform.position);
+    }
+
+    /// <summary>
+    /// Create player in scene at position
+    /// </summary>
+    private void InstantiatePlayer()
+    {
+        // instantiate player
+        GameObject playerGameObject = Instantiate(playerDetails.playerPrefab);
+
+        // initialize player
+        player = playerGameObject.GetComponent<Player>();
+
+        player.Initialize(playerDetails);
     }
 
     #region Validation
