@@ -76,6 +76,16 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     }
 
     /// <summary>
+    /// Get the player
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public Player GetPlayer()
+    {
+        return player;
+    }
+
+    /// <summary>
     /// Handle game state
     /// </summary>
     private void HandleGameState()

@@ -348,6 +348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 465425787}
   - component: {fileID: 465425788}
+  - component: {fileID: 465425789}
   m_Layer: 0
   m_Name: CinemachineTargetGroup
   m_TagString: Untagged
@@ -385,6 +386,18 @@ MonoBehaviour:
   m_RotationMode: 0
   m_UpdateMethod: 2
   m_Targets: []
+--- !u!114 &465425789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465425786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f0bd631ceef9d4d8303564887c89f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &742987500
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +545,7 @@ MonoBehaviour:
     ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
