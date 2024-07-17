@@ -53,7 +53,7 @@ public class PlayerDetailsSO : ScriptableObject
     {
         HelperUtilities.ValidateCheckEmptyStrings(this, nameof(playerCharacterName), playerCharacterName);
         HelperUtilities.ValidateCheckNullValues(this, nameof(playerPrefab), playerPrefab);
-        HelperUtilities.ValidateCheckPositiveValues(this, nameof(playerHealthAmount), playerHealthAmount, false);
+        HelperUtilities.ValidateCheckPositiveValue(this, nameof(playerHealthAmount), playerHealthAmount, false);
         HelperUtilities.ValidateCheckNullValues(this, nameof(playerMiniMapIcon), playerMiniMapIcon);
         HelperUtilities.ValidateCheckNullValues(this, nameof(playerHandSprite), playerHandSprite);
         HelperUtilities.ValidateCheckNullValues(this, nameof(runtimeAnimatorController), runtimeAnimatorController);
