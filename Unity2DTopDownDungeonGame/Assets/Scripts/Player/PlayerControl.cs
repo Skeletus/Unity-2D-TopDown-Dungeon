@@ -6,16 +6,23 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     #region Tooltip
+    [Tooltip("MovementDetailsSO scriptable object containing movement details such as speed")]
+    #endregion
+    [SerializeField] private MovementDetailsSO movementDetails;
+
+    #region Tooltip
     [Tooltip("The player WeaponShootPosition gameobject in the hierachy")]
     #endregion
     [SerializeField] private Transform weaponShootPosition;
 
     private Player player;
+    private float moveSpeed;
 
     private void Awake()
     {
         // load components
         player = GetComponent<Player>();
+        moveSpeed = movementDetails.GetMoveSpeed();
     }
 
     private void Update()
@@ -69,6 +76,37 @@ public class PlayerControl : MonoBehaviour
     /// </summary>
     private void MovementInput()
     {
-        player.idleEvent.CallIdleEvent();
+        // get movement input
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        // create a direction vector based on the input
+        Vector2 direction = new Vector2(horizontalInput, verticalInput);
+
+        // adjust distance for diagonal movement 
+        if (horizontalInput != 0f && verticalInput != 0f)
+        {
+            direction *= 0.7f;
+        }
+
+        // if there is movement
+        if (direction != Vector2.zero)
+        {
+            // trigger movement speed
+            player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+        }
+        else
+        {
+            player.idleEvent.CallIdleEvent();
+        }
     }
+
+    #region VALIDATION
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValues(this, nameof(movementDetails), movementDetails);
+    }
+#endif
+    #endregion
 }

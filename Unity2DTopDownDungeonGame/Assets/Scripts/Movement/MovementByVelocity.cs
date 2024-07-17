@@ -45,6 +45,6 @@ public class MovementByVelocity : MonoBehaviour
     private void MoveRigidBody(Vector2 moveDirection, float moveSpeed)
     {
         // ensure to rb collision is set to continous
-        rigidBody2D.velocity += moveDirection * moveDirection;
+        rigidBody2D.velocity = moveDirection * moveSpeed;
     }
 }
