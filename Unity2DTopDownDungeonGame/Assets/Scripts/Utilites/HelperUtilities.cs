@@ -5,6 +5,8 @@ using UnityEngine;
 
 public static class HelperUtilities
 {
+    public static Camera mainCamera;
+
     /// <summary>
     /// Empty string debug check
     /// </summary>
@@ -137,5 +139,89 @@ public static class HelperUtilities
         }
 
         return nearestSpawnPosition;
+    }
+
+    /// <summary>
+    /// Get the mouse world position
+    /// </summary>
+    /// <returns></returns>
+    public static Vector3 GetMouseWorldPosition()
+    {
+        if (mainCamera == null) mainCamera = Camera.main;
+
+        Vector3 mouseScreenPosition = Input.mousePosition;
+
+        // clamp mouse position to screen size
+        mouseScreenPosition.x = Mathf.Clamp(mouseScreenPosition.x, 0f, Screen.width);
+        mouseScreenPosition.y = Mathf.Clamp(mouseScreenPosition.y, 0f, Screen.height);
+
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+        worldPosition.z = 0f;
+
+        return worldPosition;
+    }
+
+    /// <summary>
+    /// Get the angle in degrees from a direction vector
+    /// </summary>
+    /// <param name="vector"></param>
+    /// <returns></returns>
+    public static float GetAngleFromVector(Vector3 vector)
+    {
+        float radians = Mathf.Atan2(vector.y, vector.x);
+
+        float degrees = radians * Mathf.Rad2Deg;
+
+        return degrees;
+    }
+
+    /// <summary>
+    /// Get aim direction enum value from the pased in angledegrees
+    /// </summary>
+    /// <param name="angleDegrees"></param>
+    /// <returns></returns>
+    public static AimDirection GetAimDirection(float angleDegrees)
+    {
+        AimDirection aimDirection;
+
+        // set the player direction
+        // up right
+        if (angleDegrees >= 22f && angleDegrees <= 67f)
+        {
+            aimDirection = AimDirection.UpRight;
+        }
+        // up direction 
+        else if (angleDegrees > 67f && angleDegrees <= 117f)
+        {
+            aimDirection = AimDirection.Up;
+        }
+        // up left
+        else if (angleDegrees > 112f && angleDegrees <= 150f)
+        {
+            aimDirection = AimDirection.UpLeft;
+        }
+        // left 
+        else if ((angleDegrees <= 180f && angleDegrees > 150f) || 
+            (angleDegrees > -180f && angleDegrees <= -135f))
+        {
+            aimDirection = AimDirection.Left;
+        }
+        // down
+        else if (angleDegrees > -135f && angleDegrees <= -45f)
+        {
+            aimDirection = AimDirection.Down;
+        }
+        // right
+        else if((angleDegrees > -45f && angleDegrees <= 0f) || 
+            (angleDegrees > 0f && angleDegrees < 22f))
+        {
+            aimDirection = AimDirection.Right;
+        }
+        else
+        {
+            aimDirection = AimDirection.Right;
+        }
+
+        return aimDirection;
     }
 }
