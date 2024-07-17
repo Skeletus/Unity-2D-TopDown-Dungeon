@@ -17,6 +17,9 @@ public class AnimatePlayer : MonoBehaviour
 
     private void OnEnable()
     {
+        // subscribe to movement by velocity event
+        player.movementByVelocityEvent.OnMovementByVelocity += MovementByVelocityEvent_OnMovementByVelocity;
+
         // subscribe to idle event
         player.idleEvent.OnIdle += IdleEvent_OnIdle;
 
@@ -26,11 +29,25 @@ public class AnimatePlayer : MonoBehaviour
 
     private void OnDisable()
     {
+        // unsubscribe to movement by velocity event
+        player.movementByVelocityEvent.OnMovementByVelocity -= MovementByVelocityEvent_OnMovementByVelocity;
+
         // unsubscribe to idle event
         player.idleEvent.OnIdle -= IdleEvent_OnIdle;
 
         // unsubscribe to weapon aim event
         player.aimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
+    }
+
+    /// <summary>
+    /// On movement by velocity event handler
+    /// </summary>
+    /// <param name="arg1"></param>
+    /// <param name="arg2"></param>
+    private void MovementByVelocityEvent_OnMovementByVelocity(MovementByVelocityEvent movementByVelocityEvent,
+        MovementByVelocityArgs movementByVelocityArgs)
+    {
+        SetMovementAnimationParameters();
     }
 
     /// <summary>
@@ -74,6 +91,15 @@ public class AnimatePlayer : MonoBehaviour
                 break;
 
         }
+    }
+
+    /// <summary>
+    /// Set movement animation parameters
+    /// </summary>
+    private void SetMovementAnimationParameters()
+    {
+        player.animator.SetBool(Settings.isMoving, true);
+        player.animator.SetBool(Settings.isIdle, false);
     }
 
     /// <summary>
