@@ -179,6 +179,28 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // if collided with something stop player roll coroutine
+        StopPlayerRollRoutine();
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        // if in collision with something stop player roll coroutine
+        StopPlayerRollRoutine();
+    }
+
+    private void StopPlayerRollRoutine()
+    {
+        if (playerRollCoroutine != null)
+        {
+            StopCoroutine(playerRollCoroutine);
+
+            isPlayerRolling = false;
+        }
+    }
+
     #region VALIDATION
 #if UNITY_EDITOR
     private void OnValidate()
