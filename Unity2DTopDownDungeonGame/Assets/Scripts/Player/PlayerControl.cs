@@ -17,6 +17,10 @@ public class PlayerControl : MonoBehaviour
 
     private Player player;
     private float moveSpeed;
+    private Coroutine playerRollCoroutine;
+    private WaitForFixedUpdate waitForFixedUpdate;
+    private bool isPlayerRolling = false;
+    private float playerRollCooldownTimer = 0f;
 
     private void Awake()
     {
@@ -25,13 +29,28 @@ public class PlayerControl : MonoBehaviour
         moveSpeed = movementDetails.GetMoveSpeed();
     }
 
+    private void Start()
+    {
+        // create waitforfixed update for use in coroutine
+        waitForFixedUpdate = new WaitForFixedUpdate();
+    }
+
     private void Update()
     {
+        // if player is rolling then return
+        if (isPlayerRolling)
+        {
+            return;
+        }
+
         // process player movement input
         MovementInput();
 
         // process player weapon input
         WeaponInput();
+
+        // player roll cooldown timer
+        PlayerRollCooldownTimer();
     }
 
     private void WeaponInput()
@@ -79,6 +98,8 @@ public class PlayerControl : MonoBehaviour
         // get movement input
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
+        // check if right click was pressed
+        bool rightMouseBottonDown = Input.GetMouseButtonDown(1);
 
         // create a direction vector based on the input
         Vector2 direction = new Vector2(horizontalInput, verticalInput);
@@ -89,15 +110,72 @@ public class PlayerControl : MonoBehaviour
             direction *= 0.7f;
         }
 
-        // if there is movement
+        // if there is movement either move or roll
         if (direction != Vector2.zero)
         {
-            // trigger movement speed
-            player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+            if (!rightMouseBottonDown)
+            {
+                // trigger movement speed
+                player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+            }
+            else if (playerRollCooldownTimer <= 0f)
+            {
+                PlayerRoll((Vector3)direction);
+            }
         }
         else
         {
             player.idleEvent.CallIdleEvent();
+        }
+    }
+
+    /// <summary>
+    /// Player roll
+    /// </summary>
+    /// <param name="direction"></param>
+    private void PlayerRoll(Vector3 direction)
+    {
+        playerRollCoroutine = StartCoroutine(PlayerRollRoutine(direction));
+    }
+
+    /// <summary>
+    /// Player roll coroutine
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    private IEnumerator PlayerRollRoutine(Vector3 direction)
+    {
+        // min distance used to decide when to exite coroutine loop
+        float minDistance = 0.2f;
+
+        isPlayerRolling = true;
+
+        Vector3 targetPosition = player.transform.position + (Vector3)direction * 
+            movementDetails.rollDistance;
+
+        while(Vector3.Distance(player.transform.position, targetPosition) > minDistance)
+        {
+            player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition,
+                player.transform.position, movementDetails.rollSpeed,
+                direction, isPlayerRolling);
+
+            // yield and wait for fixed update
+            yield return waitForFixedUpdate;
+        }
+
+        isPlayerRolling = false;
+
+        // set cooldownTimer 
+        playerRollCooldownTimer = movementDetails.rollCooldownTime;
+
+        player.transform.position = targetPosition;
+    }
+
+    private void PlayerRollCooldownTimer()
+    {
+        if (playerRollCooldownTimer >= 0f)
+        {
+            playerRollCooldownTimer -= Time.deltaTime;
         }
     }
 
