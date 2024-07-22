@@ -33,6 +33,9 @@ public class PlayerControl : MonoBehaviour
     {
         // create waitforfixed update for use in coroutine
         waitForFixedUpdate = new WaitForFixedUpdate();
+
+        // set player animation speed
+        SetPlayerAnimationSpeed();
     }
 
     private void Update()
@@ -199,6 +202,15 @@ public class PlayerControl : MonoBehaviour
 
             isPlayerRolling = false;
         }
+    }
+
+    /// <summary>
+    /// Set player animator speed to match movement speed
+    /// </summary>
+    private void SetPlayerAnimationSpeed()
+    {
+        // set animator speed to match movement speed
+        player.animator.speed = moveSpeed / Settings.baseSpeedForPlayerAnimations;
     }
 
     #region VALIDATION

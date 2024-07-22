@@ -22,7 +22,9 @@ public static class Settings
     public const int maxChildCorridors = 3;
     #endregion
 
-    #region ANIMATOR SETTINGS
+    #region ANIMATOR PARAMETERS
+    public static float baseSpeedForPlayerAnimations = 8f;
+
     // animator parameteres - player
     public static int aimUp = Animator.StringToHash("aimUp");
     public static int aimDown = Animator.StringToHash("aimDown");
