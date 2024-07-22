@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 5685417970280452667}
   - component: {fileID: 5183196240215621017}
   - component: {fileID: 7880456650645700043}
+  - component: {fileID: 2252903494768813620}
   m_Layer: 13
   m_Name: DoorNS
   m_TagString: Untagged
@@ -189,6 +190,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2252903494768813620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218687627015961394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a478867ff2ef44f973d90789ba48e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorCollider: {fileID: 8302556102915446113}
+  isBossRoomDoor: 0
 --- !u!1 &5550148786725990590
 GameObject:
   m_ObjectHideFlags: 0
