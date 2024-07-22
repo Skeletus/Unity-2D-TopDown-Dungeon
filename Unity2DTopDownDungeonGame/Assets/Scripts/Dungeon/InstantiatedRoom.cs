@@ -104,6 +104,18 @@ public class InstantiatedRoom : MonoBehaviour
                         doorway.position.y + tileDistance * 1.25f,
                         0f);
                 }
+
+                // get door component
+                Door doorComponent = door.GetComponent<Door>();
+
+                // set if door is part of a boss room
+                if (room.roomNodeType.isBossRoom)
+                {
+                    doorComponent.isBossRoomDoor = true;
+
+                    // lock the door to prevent access to the room
+                    doorComponent.LockDoor();
+                }
             }
         }
     }
