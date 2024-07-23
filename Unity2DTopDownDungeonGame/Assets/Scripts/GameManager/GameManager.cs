@@ -41,6 +41,18 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         InstantiatePlayer();
     }
 
+    private void OnEnable()
+    {
+        // subscribe to room changed event
+        StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
+    }
+
+    private void OnDisable()
+    {
+        // unsubscribe to room changed event
+        StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+    }
+
     private void Start()
     {
         gameState = GameState.gameStarted;
@@ -138,6 +150,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player = playerGameObject.GetComponent<Player>();
 
         player.Initialize(playerDetails);
+    }
+
+    /// <summary>
+    /// Handle room changed event
+    /// </summary>
+    /// <param name="roomChangedEventArgs"></param>
+    private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
+    {
+        SetCurrentRoom(roomChangedEventArgs.room);
     }
 
     #region Validation
