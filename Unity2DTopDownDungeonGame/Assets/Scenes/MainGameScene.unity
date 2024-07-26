@@ -1100,7 +1100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160c0cdde4caf87428f400cd919bdec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolArray: []
+  poolArray:
+  - poolSize: 30
+    prefab: {fileID: 4869766179601066807, guid: accfe3d8c777ed04ea687e4a8b84815a, type: 3}
+    componentType: IFireable
 --- !u!1 &1911397365
 GameObject:
   m_ObjectHideFlags: 0
