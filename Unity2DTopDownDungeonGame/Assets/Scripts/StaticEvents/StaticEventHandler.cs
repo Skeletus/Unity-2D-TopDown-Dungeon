@@ -10,7 +10,7 @@ public static class StaticEventHandler
 
     public static void CallRoomChangedEvent(Room room)
     {
-        OnRoomChanged?.Invoke(new RoomChangedEventArgs
+        OnRoomChanged?.Invoke(new RoomChangedEventArgs()
         {
             room = room
         });
