@@ -432,6 +432,7 @@ GameObject:
   - component: {fileID: 6575822008060033762}
   - component: {fileID: 1653460330541342483}
   - component: {fileID: 2810919199276042638}
+  - component: {fileID: 4030581827987787782}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -651,8 +652,10 @@ MonoBehaviour:
   movementToPositionEvent: {fileID: 0}
   idleEvent: {fileID: 0}
   aimWeaponEvent: {fileID: 0}
+  fireWeaponEvent: {fileID: 0}
   setActiveWeaponEvent: {fileID: 0}
   activeWeapon: {fileID: 0}
+  weaponFiredEvent: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
 --- !u!114 &8077122622630838738
@@ -827,5 +830,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e358b930e39894346933471f6ec6cd10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4030581827987787782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058356927663575523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb118d9ab93dbf4d98452e3fe002f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
