@@ -62,10 +62,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         HandleGameState();
 
+        /*
         if (Input.GetKeyDown(KeyCode.R))
         {
             gameState = GameState.gameStarted;
         }
+        */
     }
 
     /// <summary>
