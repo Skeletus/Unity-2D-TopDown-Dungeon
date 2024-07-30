@@ -21,6 +21,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(ActiveWeapon))]
 [RequireComponent(typeof(WeaponFiredEvent))]
 [RequireComponent(typeof(ReloadWeaponEvent))]
+[RequireComponent(typeof(ReloadWeapon))]
 [RequireComponent(typeof(WeaponReloadedEvent))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SortingGroup))]
