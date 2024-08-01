@@ -1054,13 +1054,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3f60a9f31ea444fb3c1e66bb7ae0be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponImage: {fileID: 0}
-  ammoHolderTransform: {fileID: 0}
-  reloadText: {fileID: 0}
-  ammoRemainingText: {fileID: 0}
-  weaponNameText: {fileID: 0}
-  reloadBar: {fileID: 0}
-  barImage: {fileID: 0}
+  weaponImage: {fileID: 1795115185}
+  ammoHolderTransform: {fileID: 18826025}
+  reloadText: {fileID: 104286776}
+  ammoRemainingText: {fileID: 398276466}
+  weaponNameText: {fileID: 187857115}
+  reloadBar: {fileID: 2135672595}
+  barImage: {fileID: 1245291976}
 --- !u!1 &742987500
 GameObject:
   m_ObjectHideFlags: 0
