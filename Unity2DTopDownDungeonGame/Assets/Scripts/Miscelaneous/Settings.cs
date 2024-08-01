@@ -55,4 +55,8 @@ public static class Settings
     // from the weapon shoot position) 
     public const float useAimAngleDistance = 3.5f;
     #endregion
+
+    #region UI Parameters
+    public const float uiAmmoIconSpacing = 4f;
+    #endregion
 }
