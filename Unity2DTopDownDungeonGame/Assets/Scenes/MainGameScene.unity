@@ -612,7 +612,6 @@ GameObject:
   m_Component:
   - component: {fileID: 288193161}
   - component: {fileID: 288193160}
-  - component: {fileID: 288193159}
   - component: {fileID: 288193158}
   - component: {fileID: 288193162}
   - component: {fileID: 288193163}
@@ -655,14 +654,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &288193159
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288193157}
-  m_Enabled: 1
 --- !u!20 &288193160
 Camera:
   m_ObjectHideFlags: 0
@@ -1061,6 +1052,50 @@ MonoBehaviour:
   weaponNameText: {fileID: 187857115}
   reloadBar: {fileID: 2135672595}
   barImage: {fileID: 1245291976}
+--- !u!1 &644217131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 644217132}
+  - component: {fileID: 644217133}
+  m_Layer: 0
+  m_Name: SoundEffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &644217132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644217131}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &644217133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644217131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5ba118efe19e54c9964c4464c55644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsVolume: 8
 --- !u!1 &742987500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,6 +1106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 742987501}
   - component: {fileID: 742987502}
+  - component: {fileID: 742987503}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1113,6 +1149,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f366f364925fa8b4ca5984aa6b265913, type: 2}
   currentDungeonLevelListIndex: 0
   gameState: 0
+--- !u!81 &742987503
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742987500}
+  m_Enabled: 1
 --- !u!1 &795844877
 GameObject:
   m_ObjectHideFlags: 0
