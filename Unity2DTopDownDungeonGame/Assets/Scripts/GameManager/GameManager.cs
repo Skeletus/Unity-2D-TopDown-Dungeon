@@ -92,11 +92,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// <summary>
     /// Get the player
     /// </summary>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public Player GetPlayer()
     {
         return player;
+    }
+
+    /// <summary>
+    /// Get the player minimap icon
+    /// </summary>
+    public Sprite GetPlayerMiniMapIcon()
+    {
+        return playerDetails.playerMiniMapIcon;
     }
 
     /// <summary>
