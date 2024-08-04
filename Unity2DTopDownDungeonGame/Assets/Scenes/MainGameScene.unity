@@ -2077,6 +2077,9 @@ MonoBehaviour:
   - poolSize: 10
     prefab: {fileID: 4869766179601066807, guid: 01c5603ac8959564e8fa9fc8a51ac1a3, type: 3}
     componentType: IFireable
+  - poolSize: 40
+    prefab: {fileID: 1061411871885556400, guid: c08c7c16ae039b24db46dadffee71f0b, type: 3}
+    componentType: SoundEffect
 --- !u!1 &1795115183
 GameObject:
   m_ObjectHideFlags: 0
