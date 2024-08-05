@@ -1840,7 +1840,7 @@ MonoBehaviour:
     ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2676,6 +2676,9 @@ MonoBehaviour:
   - poolSize: 40
     prefab: {fileID: 1061411871885556400, guid: c08c7c16ae039b24db46dadffee71f0b, type: 3}
     componentType: SoundEffect
+  - poolSize: 20
+    prefab: {fileID: 7544710169918378901, guid: 133485fdc02ed7345b477384ef420ce6, type: 3}
+    componentType: WeaponShootEffect
 --- !u!1 &1795115183
 GameObject:
   m_ObjectHideFlags: 0
