@@ -2679,6 +2679,9 @@ MonoBehaviour:
   - poolSize: 20
     prefab: {fileID: 7544710169918378901, guid: 133485fdc02ed7345b477384ef420ce6, type: 3}
     componentType: WeaponShootEffect
+  - poolSize: 20
+    prefab: {fileID: 3533902656250018642, guid: 1565e527194f07947ad390288d053f3f, type: 3}
+    componentType: WeaponShootEffect
 --- !u!1 &1795115183
 GameObject:
   m_ObjectHideFlags: 0
