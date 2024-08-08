@@ -135,4 +135,12 @@ public class Player : MonoBehaviour
     {
         health.SetStartingHealth(playerDetails.playerHealthAmount);
     }
+
+    /// <summary>
+    /// Returns the player position
+    /// </summary>
+    public Vector3 GetPlayerPosition()
+    {
+        return transform.position;
+    }
 }
