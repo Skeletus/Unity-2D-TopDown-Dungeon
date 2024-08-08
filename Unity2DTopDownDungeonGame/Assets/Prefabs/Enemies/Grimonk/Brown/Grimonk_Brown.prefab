@@ -123,6 +123,10 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].y
       value: 1.4859633
       objectReference: {fileID: 0}
+    - target: {fileID: 4931196393222057966, guid: 61c210d90d72e314b839bfa6ef7e5a43, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 944ecbb1810696b4a8a6781ac1e002a5, type: 2}
     - target: {fileID: 6263878609871842715, guid: 61c210d90d72e314b839bfa6ef7e5a43, type: 3}
       propertyPath: m_RootOrder
       value: 0
