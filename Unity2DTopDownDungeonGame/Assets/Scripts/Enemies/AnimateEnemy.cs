@@ -50,6 +50,15 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void MovementToPositionEvent_OnMovementToPosition(MovementToPositionEvent movementToPositionEvent, MovementToPositionArgs movementToPositionArgs)
     {
+        if(enemy.transform.position.x < GameManager.Instance.GetPlayer().transform.position.x)
+        {
+            SetAimWeaponAnimationParameters(AimDirection.Right);
+        }
+        else
+        {
+            SetAimWeaponAnimationParameters(AimDirection.Left);
+        }
+
         SetMovementAnimationParameters();
     }
 
@@ -100,6 +109,8 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void SetAimWeaponAnimationParameters(AimDirection aimDirection)
     {
+        InitialiseAimAnimationParameters();
+
         // Set aim direction
         switch (aimDirection)
         {

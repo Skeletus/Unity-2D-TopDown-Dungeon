@@ -1180,6 +1180,7 @@ GameObject:
   - component: {fileID: 742987501}
   - component: {fileID: 742987502}
   - component: {fileID: 742987503}
+  - component: {fileID: 742987504}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1220,7 +1221,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1ee4ce1f99bb5744fb58da6bedd74b98, type: 2}
   - {fileID: 11400000, guid: 3703c3988c093ed448065eca849ee9af, type: 2}
   - {fileID: 11400000, guid: f366f364925fa8b4ca5984aa6b265913, type: 2}
-  currentDungeonLevelListIndex: 0
+  currentDungeonLevelListIndex: 2
   gameState: 0
 --- !u!81 &742987503
 AudioListener:
@@ -1230,6 +1231,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742987500}
   m_Enabled: 1
+--- !u!114 &742987504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742987500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ece5489c01332e4da6bb167449bf313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomTemplateSO: {fileID: 11400000, guid: 5ec7c3fd29261984abd0f0a91400645d, type: 2}
 --- !u!1 &795844877
 GameObject:
   m_ObjectHideFlags: 0
