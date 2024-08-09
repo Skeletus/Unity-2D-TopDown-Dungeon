@@ -581,7 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce3a58ffc06620f4fb699ecae2e26fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyDetails: {fileID: 0}
+  enemyDetails: {fileID: 11400000, guid: 51ed00e80948d7d42b51ee93a4b0f7ca, type: 2}
   movementToPositionEvent: {fileID: 0}
   idleEvent: {fileID: 0}
   spriteRendererArray: []
@@ -598,7 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e9c8e04a65b0845ad16b8e1c0365db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementDetails: {fileID: 0}
+  movementDetails: {fileID: 11400000, guid: c273f7f31017dc642b994b4d6ccdb276, type: 2}
   moveSpeed: 0
   updateFrameNumber: 1
 --- !u!114 &8203820414417607500
