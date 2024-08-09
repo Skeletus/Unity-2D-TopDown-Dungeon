@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: 532354611067164563}
   - component: {fileID: 6856120347803620944}
   - component: {fileID: 7543148709685443813}
+  - component: {fileID: 7286370130415886070}
   m_Layer: 15
   m_Name: Enemy
   m_TagString: Untagged
@@ -581,6 +582,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDetails: {fileID: 0}
+  movementToPositionEvent: {fileID: 0}
+  idleEvent: {fileID: 0}
   spriteRendererArray: []
   animator: {fileID: 0}
 --- !u!114 &6146161865039065722
@@ -595,6 +598,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e9c8e04a65b0845ad16b8e1c0365db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementDetails: {fileID: 0}
+  moveSpeed: 0
+  updateFrameNumber: 1
 --- !u!114 &8203820414417607500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,6 +647,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e654ae84923cb364eb16ff340e009f79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7286370130415886070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691814120113307194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cbd03dda28c6f748890ee01bd0a3533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8756610823884650483
