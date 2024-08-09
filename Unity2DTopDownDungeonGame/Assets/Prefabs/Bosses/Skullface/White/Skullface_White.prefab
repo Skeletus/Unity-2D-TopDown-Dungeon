@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2532926281687495817, guid: 61c210d90d72e314b839bfa6ef7e5a43, type: 3}
+      propertyPath: enemyDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: ba8ba0dc59803cc48935a04591224f9a, type: 2}
     - target: {fileID: 2807764796988060742, guid: 61c210d90d72e314b839bfa6ef7e5a43, type: 3}
       propertyPath: m_Size.x
       value: 1.3125
@@ -159,6 +163,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2a6e05932cc7db243b3bb6296cff5612, type: 2}
+    - target: {fileID: 6146161865039065722, guid: 61c210d90d72e314b839bfa6ef7e5a43, type: 3}
+      propertyPath: movementDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: 07062aebf3051074fb59035d9835af38, type: 2}
     - target: {fileID: 6263878609871842715, guid: 61c210d90d72e314b839bfa6ef7e5a43, type: 3}
       propertyPath: m_RootOrder
       value: 0
