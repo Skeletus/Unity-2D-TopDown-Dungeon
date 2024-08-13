@@ -39,6 +39,9 @@ public static class Settings
     public static int rollLeft = Animator.StringToHash("rollLeft");
     public static int rollDown = Animator.StringToHash("rollDown");
 
+    // Animator parameters - Enemy
+    public static float baseSpeedForEnemyAnimations = 3f;
+
     // animator parameters - door
     public static int open = Animator.StringToHash("open");
 
