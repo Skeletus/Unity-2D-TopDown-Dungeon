@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b50a6f495799184789439dad5461ce3, type: 3}
+  m_Name: WeaponDetails_SMG_Enemy
+  m_EditorClassIdentifier: 
+  weaponName: SMG Enemy
+  weaponSprite: {fileID: 21300000, guid: dff74299f2cf7674eb05930ed6b07f8e, type: 3}
+  weaponShootPosition: {x: 1.125, y: 0.313, z: 0}
+  weaponCurrentAmmo: {fileID: 11400000, guid: f7d169171c30c2847b3ec3c2768c29ee, type: 2}
+  weaponShootEffect: {fileID: 11400000, guid: fdafe2daaf2b86243952a1467e82bcd8, type: 2}
+  weaponFiringSoundEffect: {fileID: 11400000, guid: c3defabdee188c643b07e8137689883e, type: 2}
+  weaponReloadingSoundEffect: {fileID: 11400000, guid: 30cde2dc8df938a47a872738a45e5d5b, type: 2}
+  hasInfiniteAmmo: 1
+  hasInfiniteClipCapacity: 0
+  weaponClipAmmoCapacity: 12
+  weaponAmmoCapacity: 0
+  weaponFireRate: 0.33
+  weaponPreChargeTime: 0
+  weaponReloadTime: 2
