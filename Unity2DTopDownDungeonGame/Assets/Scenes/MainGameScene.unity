@@ -1263,7 +1263,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1ee4ce1f99bb5744fb58da6bedd74b98, type: 2}
   - {fileID: 11400000, guid: 3703c3988c093ed448065eca849ee9af, type: 2}
   - {fileID: 11400000, guid: f366f364925fa8b4ca5984aa6b265913, type: 2}
-  currentDungeonLevelListIndex: 0
+  currentDungeonLevelListIndex: 5
   gameState: 0
   previousGameState: 0
 --- !u!81 &742987503
