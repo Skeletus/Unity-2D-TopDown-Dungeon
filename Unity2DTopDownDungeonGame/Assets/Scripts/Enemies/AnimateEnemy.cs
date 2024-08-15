@@ -21,7 +21,7 @@ public class AnimateEnemy : MonoBehaviour
         enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
 
         // Subscribe to weapon aim event
-        //enemy.aimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
+        enemy.aimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
     }
 
     private void OnDisable()
@@ -33,7 +33,7 @@ public class AnimateEnemy : MonoBehaviour
         enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
 
         // Unsubscribe from weapon aim event event
-        //enemy.aimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
+        enemy.aimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
     }
 
     /// <summary>
@@ -50,15 +50,6 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void MovementToPositionEvent_OnMovementToPosition(MovementToPositionEvent movementToPositionEvent, MovementToPositionArgs movementToPositionArgs)
     {
-        if(enemy.transform.position.x < GameManager.Instance.GetPlayer().transform.position.x)
-        {
-            SetAimWeaponAnimationParameters(AimDirection.Right);
-        }
-        else
-        {
-            SetAimWeaponAnimationParameters(AimDirection.Left);
-        }
-
         SetMovementAnimationParameters();
     }
 
@@ -109,8 +100,6 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void SetAimWeaponAnimationParameters(AimDirection aimDirection)
     {
-        InitialiseAimAnimationParameters();
-
         // Set aim direction
         switch (aimDirection)
         {
