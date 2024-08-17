@@ -10,13 +10,14 @@ public class PlayerControl : MonoBehaviour
     #endregion
     [SerializeField] private MovementDetailsSO movementDetails;
 
+    [HideInInspector] public bool isPlayerRolling = false;
+    
     private Player player;
     private bool leftMouseDownPreviousFrame = false;
     private int currentWeaponIndex = 1;
     private float moveSpeed;
     private Coroutine playerRollCoroutine;
     private WaitForFixedUpdate waitForFixedUpdate;
-    private bool isPlayerRolling = false;
     private float playerRollCooldownTimer = 0f;
 
     private void Awake()

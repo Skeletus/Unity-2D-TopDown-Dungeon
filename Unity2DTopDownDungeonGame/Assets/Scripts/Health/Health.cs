@@ -6,11 +6,13 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour
 {
+    [HideInInspector] public Enemy enemy;
     [HideInInspector] public bool isDamageable = true;
 
     private int startingHealth;
     private int currentHealth;
     private HealthEvent healthEvent;
+    private Player player;
 
     private void Awake()
     {
@@ -23,6 +25,9 @@ public class Health : MonoBehaviour
         // Trigger a health event for UI update
         CallHealthEvent(0);
 
+        // Attempt to load enemy / player components
+        player = GetComponent<Player>();
+        enemy = GetComponent<Enemy>();
     }
 
     private void CallHealthEvent(int damageAmount)
@@ -36,8 +41,12 @@ public class Health : MonoBehaviour
     /// </summary>
     public void TakeDamage(int damageAmount)
     {
+        bool isRolling = false;
 
-        if (isDamageable)
+        if (player != null)
+            isRolling = player.playerControl.isPlayerRolling;
+
+        if (isDamageable && !isRolling)
         {
             currentHealth -= damageAmount;
             CallHealthEvent(damageAmount);
