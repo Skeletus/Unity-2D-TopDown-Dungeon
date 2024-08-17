@@ -413,6 +413,7 @@ GameObject:
   - component: {fileID: 249232973139100783}
   - component: {fileID: 2473593376155898080}
   - component: {fileID: 3661264923783221384}
+  - component: {fileID: 7591941198462763111}
   m_Layer: 15
   m_Name: Enemy
   m_TagString: Untagged
@@ -856,6 +857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b506f2f7d60cc046b28bc5e5ff391c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
   isDamageable: 1
 --- !u!114 &2473593376155898080
 MonoBehaviour:
@@ -881,6 +883,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9d575a6cce2a74cac22e90dfae3f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7591941198462763111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691814120113307194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe1926b0149a094382e9cf649a9c404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactDamageAmount: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 132096
 --- !u!1 &8756610823884650483
 GameObject:
   m_ObjectHideFlags: 0

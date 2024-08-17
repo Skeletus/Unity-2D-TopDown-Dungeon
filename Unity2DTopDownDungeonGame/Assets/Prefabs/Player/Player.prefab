@@ -439,6 +439,8 @@ GameObject:
   - component: {fileID: 5398450356443543982}
   - component: {fileID: 245553440442811399}
   - component: {fileID: 5975182742308012749}
+  - component: {fileID: 624690765990409006}
+  - component: {fileID: 5074232051331127677}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -474,6 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b506f2f7d60cc046b28bc5e5ff391c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
   isDamageable: 1
 --- !u!210 &3058356927663575531
 SortingGroup:
@@ -654,7 +657,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDetails: {fileID: 0}
+  healthEvent: {fileID: 0}
   health: {fileID: 0}
+  destroyedEvent: {fileID: 0}
+  playerControl: {fileID: 0}
   movementByVelocityEvent: {fileID: 0}
   movementToPositionEvent: {fileID: 0}
   idleEvent: {fileID: 0}
@@ -680,6 +686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementDetails: {fileID: 11400000, guid: 0621bdb0b3aaf3f489bcf680be950fb1, type: 2}
+  isPlayerRolling: 0
 --- !u!114 &6097944093857417194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,3 +932,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9d575a6cce2a74cac22e90dfae3f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &624690765990409006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058356927663575523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe1926b0149a094382e9cf649a9c404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactDamageAmount: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 131072
+--- !u!114 &5074232051331127677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3058356927663575523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08fe06b75c2730e4f916517acac0aaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactDamageAmount: 0
