@@ -199,7 +199,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         gameScore += pointsScoredArgs.points;
 
         // Call score changed event
-        StaticEventHandler.CallScoreChangedEvent(gameScore);
+        //StaticEventHandler.CallScoreChangedEvent(gameScore);
     }
 
     #region Validation
