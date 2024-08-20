@@ -31,6 +31,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private PlayerDetailsSO playerDetails;
     private Player player;
     private long gameScore;
+    private int scoreMultiplier;
 
     protected override void Awake()
     {
@@ -50,6 +51,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Subscribe to the points scored event
         StaticEventHandler.OnPointsScored += StaticEventHandler_OnPointsScored;
+
+        // Subscribe to score multiplier event
+        StaticEventHandler.OnMultiplier += StaticEventHandler_OnMultiplier;
     }
 
     private void OnDisable()
@@ -60,6 +64,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // Unsubscribe from the points scored event
         StaticEventHandler.OnPointsScored -= StaticEventHandler_OnPointsScored;
 
+        // Unsubscribe from score multiplier event
+        StaticEventHandler.OnMultiplier -= StaticEventHandler_OnMultiplier;
+
     }
 
     private void Start()
@@ -69,6 +76,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Set score to zero
         gameScore = 0;
+
+        // Set multiplier to 1;
+        scoreMultiplier = 1;
     }
 
     private void Update()
@@ -196,11 +206,33 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void StaticEventHandler_OnPointsScored(PointsScoredArgs pointsScoredArgs)
     {
         // Increase score
-        gameScore += pointsScoredArgs.points;
+        gameScore += pointsScoredArgs.points * scoreMultiplier;
 
         // Call score changed event
-        //StaticEventHandler.CallScoreChangedEvent(gameScore);
+        StaticEventHandler.CallScoreChangedEvent(gameScore, scoreMultiplier);
     }
+
+    /// <summary>
+    /// Handle score multiplier event
+    /// </summary>
+    private void StaticEventHandler_OnMultiplier(MultiplierArgs multiplierArgs)
+    {
+        if (multiplierArgs.multiplier)
+        {
+            scoreMultiplier++;
+        }
+        else
+        {
+            scoreMultiplier--;
+        }
+
+        // clamp between 1 and 30
+        scoreMultiplier = Mathf.Clamp(scoreMultiplier, 1, 30);
+
+        // Call score changed event
+        StaticEventHandler.CallScoreChangedEvent(gameScore, scoreMultiplier);
+    }
+
 
     #region Validation
 #if UNITY_EDITOR
