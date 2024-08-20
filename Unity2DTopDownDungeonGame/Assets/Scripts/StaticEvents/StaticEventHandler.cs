@@ -35,9 +35,9 @@ public static class StaticEventHandler
     // Score changed event
     public static event Action<ScoreChangedArgs> OnScoreChanged;
 
-    public static void CallScoreChangedEvent(long score, int multiplier)
+    public static void CallScoreChangedEvent(long score)
     {
-        OnScoreChanged?.Invoke(new ScoreChangedArgs() { score = score, multiplier = multiplier });
+        OnScoreChanged?.Invoke(new ScoreChangedArgs() { score = score });
     }
 }
 

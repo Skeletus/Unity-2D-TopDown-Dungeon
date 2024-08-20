@@ -30,6 +30,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private Room previousRoom;
     private PlayerDetailsSO playerDetails;
     private Player player;
+    private long gameScore;
 
     protected override void Awake()
     {
@@ -46,18 +47,28 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         // subscribe to room changed event
         StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
+
+        // Subscribe to the points scored event
+        StaticEventHandler.OnPointsScored += StaticEventHandler_OnPointsScored;
     }
 
     private void OnDisable()
     {
         // unsubscribe to room changed event
         StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+
+        // Unsubscribe from the points scored event
+        StaticEventHandler.OnPointsScored -= StaticEventHandler_OnPointsScored;
+
     }
 
     private void Start()
     {
         previousGameState = GameState.gameStarted;
         gameState = GameState.gameStarted;
+
+        // Set score to zero
+        gameScore = 0;
     }
 
     private void Update()
@@ -177,6 +188,18 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
     {
         SetCurrentRoom(roomChangedEventArgs.room);
+    }
+
+    /// <summary>
+    /// Handle points scored event
+    /// </summary>
+    private void StaticEventHandler_OnPointsScored(PointsScoredArgs pointsScoredArgs)
+    {
+        // Increase score
+        gameScore += pointsScoredArgs.points;
+
+        // Call score changed event
+        StaticEventHandler.CallScoreChangedEvent(gameScore);
     }
 
     #region Validation
