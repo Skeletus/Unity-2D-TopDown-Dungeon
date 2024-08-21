@@ -32,6 +32,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private Player player;
     private long gameScore;
     private int scoreMultiplier;
+    private InstantiatedRoom bossRoom;
 
     protected override void Awake()
     {
@@ -49,6 +50,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // subscribe to room changed event
         StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
 
+        // Subscribe to room enemies defeated event
+        StaticEventHandler.OnRoomEnemiesDefeated += StaticEventHandler_OnRoomEnemiesDefeated;
+
         // Subscribe to the points scored event
         StaticEventHandler.OnPointsScored += StaticEventHandler_OnPointsScored;
 
@@ -60,6 +64,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         // unsubscribe to room changed event
         StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+
+        // Unsubscribe from room enemies defeated event
+        StaticEventHandler.OnRoomEnemiesDefeated -= StaticEventHandler_OnRoomEnemiesDefeated;
 
         // Unsubscribe from the points scored event
         StaticEventHandler.OnPointsScored -= StaticEventHandler_OnPointsScored;
@@ -201,6 +208,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     }
 
     /// <summary>
+    /// Handle room enemies defeated event
+    /// </summary>
+    private void StaticEventHandler_OnRoomEnemiesDefeated(RoomEnemiesDefeatedArgs roomEnemiesDefeatedArgs)
+    {
+        RoomEnemiesDefeated();
+    }
+
+
+    /// <summary>
     /// Handle points scored event
     /// </summary>
     private void StaticEventHandler_OnPointsScored(PointsScoredArgs pointsScoredArgs)
@@ -231,6 +247,73 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Call score changed event
         StaticEventHandler.CallScoreChangedEvent(gameScore, scoreMultiplier);
+    }
+
+    /// <summary>
+    /// Room enemies defated - test if all dungeon rooms have been cleared of enemies - if so load
+    /// next dungeon game level
+    /// </summary>
+    private void RoomEnemiesDefeated()
+    {
+        // Initialise dungeon as being cleared - but then test each room
+        bool isDungeonClearOfRegularEnemies = true;
+        bossRoom = null;
+
+        // Loop through all dungeon rooms to see if cleared of enemies
+        foreach (KeyValuePair<string, Room> keyValuePair in DungeonBuilder.Instance.dungeonBuilderRoomDictionary)
+        {
+            // skip boss room for time being
+            if (keyValuePair.Value.roomNodeType.isBossRoom)
+            {
+                bossRoom = keyValuePair.Value.instantiatedRoom;
+                continue;
+            }
+
+            // check if other rooms have been cleared of enemies
+            if (!keyValuePair.Value.isClearOfEnemies)
+            {
+                isDungeonClearOfRegularEnemies = false;
+                break;
+            }
+        }
+
+        // Set game state
+        // If dungeon level completly cleared (i.e. dungeon cleared apart from boss and there is no boss room OR dungeon cleared apart from boss and boss room is also cleared)
+        if ((isDungeonClearOfRegularEnemies && bossRoom == null) || (isDungeonClearOfRegularEnemies && bossRoom.room.isClearOfEnemies))
+        {
+            // Are there more dungeon levels then
+            if (currentDungeonLevelListIndex < dungeonLevelList.Count - 1)
+            {
+                gameState = GameState.levelCompleted;
+            }
+            else
+            {
+                gameState = GameState.gameWon;
+            }
+        }
+        // Else if dungeon level cleared apart from boss room
+        else if (isDungeonClearOfRegularEnemies)
+        {
+            gameState = GameState.bossStage;
+
+            StartCoroutine(BossStage());
+        }
+
+    }
+
+    /// <summary>
+    /// Enter boss stage
+    /// </summary>
+    private IEnumerator BossStage()
+    {
+        // Activate boss room
+        bossRoom.gameObject.SetActive(true);
+
+        // Unlock boss room
+        bossRoom.UnlockDoors(0f);
+
+        // Wait 2 seconds
+        yield return new WaitForSeconds(2f);
     }
 
 
