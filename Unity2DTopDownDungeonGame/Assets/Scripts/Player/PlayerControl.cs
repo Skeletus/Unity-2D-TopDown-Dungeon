@@ -19,6 +19,7 @@ public class PlayerControl : MonoBehaviour
     private Coroutine playerRollCoroutine;
     private WaitForFixedUpdate waitForFixedUpdate;
     private float playerRollCooldownTimer = 0f;
+    private bool isPlayerMovementDisabled = false;
 
     private void Awake()
     {
@@ -41,6 +42,10 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
+        // if player movement disabled then return
+        if (isPlayerMovementDisabled)
+            return;
+
         // if player is rolling then return
         if (isPlayerRolling)
         {
@@ -388,6 +393,23 @@ public class PlayerControl : MonoBehaviour
             currentWeaponIndex = weaponIndex;
             player.setActiveWeaponEvent.CallSetActiveWeaponEvent(player.weaponList[weaponIndex-1]);
         }
+    }
+
+    /// <summary>
+    /// Enable the player movement
+    /// </summary>
+    public void EnablePlayer()
+    {
+        isPlayerMovementDisabled = false;
+    }
+
+    /// <summary>
+    /// Disable the player movement
+    /// </summary>
+    public void DisablePlayer()
+    {
+        isPlayerMovementDisabled = true;
+        player.idleEvent.CallIdleEvent();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
