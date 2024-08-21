@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -58,6 +59,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Subscribe to score multiplier event
         StaticEventHandler.OnMultiplier += StaticEventHandler_OnMultiplier;
+
+        // Subscribe to player destroyed event
+        player.destroyedEvent.OnDestroyed += Player_OnDestroyed;
     }
 
     private void OnDisable()
@@ -74,6 +78,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // Unsubscribe from score multiplier event
         StaticEventHandler.OnMultiplier -= StaticEventHandler_OnMultiplier;
 
+        // Unubscribe from player destroyed event
+        player.destroyedEvent.OnDestroyed -= Player_OnDestroyed;
     }
 
     private void Start()
@@ -157,7 +163,41 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
                 gameState = GameState.playingLevel;
 
+                // Trigger room enemies defeated since we start in the entrance where there are no enemies (just in case you have a level with just a boss room!)
+                RoomEnemiesDefeated();
+
                 break;
+            // handle the level being completed
+            case GameState.levelCompleted:
+
+                // Display level completed text
+                StartCoroutine(LevelCompleted());
+
+                break;
+            // handle the game being won (only trigger this once - test the previous game state to do this)
+            case GameState.gameWon:
+
+                if (previousGameState != GameState.gameWon)
+                    StartCoroutine(GameWon());
+
+                break;
+            // handle the game being lost (only trigger this once - test the previous game state to do this)
+            case GameState.gameLost:
+
+                if (previousGameState != GameState.gameLost)
+                {
+                    StopAllCoroutines(); // Prevent messages if you clear the level just as you get killed
+                    StartCoroutine(GameLost());
+                }
+
+                break;
+            // restart the game
+            case GameState.restartGame:
+
+                RestartGame();
+
+                break;
+
         }
     }
 
@@ -250,6 +290,16 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     }
 
     /// <summary>
+    /// Handle player destroyed event
+    /// </summary>
+    private void Player_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
+    {
+        previousGameState = gameState;
+        gameState = GameState.gameLost;
+    }
+
+
+    /// <summary>
     /// Room enemies defated - test if all dungeon rooms have been cleared of enemies - if so load
     /// next dungeon game level
     /// </summary>
@@ -316,6 +366,66 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         yield return new WaitForSeconds(2f);
     }
 
+    /// <summary>
+    /// Show level as being completed - load next level
+    /// </summary>
+    private IEnumerator LevelCompleted()
+    {
+        // Play next level
+        gameState = GameState.playingLevel;
+
+        // Wait 2 seconds
+        yield return new WaitForSeconds(2f);
+
+        // When player presses the return key proceed to the next level
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            yield return null;
+        }
+
+        yield return null; // to avoid enter being detected twice
+
+        // Increase index to next level
+        currentDungeonLevelListIndex++;
+
+        PlayDungeonLevel(currentDungeonLevelListIndex);
+    }
+
+    /// <summary>
+    /// Game Won
+    /// </summary>
+    private IEnumerator GameWon()
+    {
+        previousGameState = GameState.gameWon;
+
+        // Wait 1 seconds
+        yield return new WaitForSeconds(1f);
+
+        // Set game state to restart game
+        gameState = GameState.restartGame;
+    }
+
+    /// <summary>
+    /// Game Lost
+    /// </summary>
+    private IEnumerator GameLost()
+    {
+        previousGameState = GameState.gameLost;
+
+        // Wait 1 seconds
+        yield return new WaitForSeconds(1f);
+
+        // Set game state to restart game
+        gameState = GameState.restartGame;
+    }
+
+    /// <summary>
+    /// Restart the game
+    /// </summary>
+    private void RestartGame()
+    {
+        SceneManager.LoadScene("MainMenuScene");
+    }
 
     #region Validation
 #if UNITY_EDITOR
