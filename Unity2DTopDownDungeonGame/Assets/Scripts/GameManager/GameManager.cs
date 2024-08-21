@@ -424,7 +424,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     private void RestartGame()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        SceneManager.LoadScene("MainGameScene");
     }
 
     #region Validation
