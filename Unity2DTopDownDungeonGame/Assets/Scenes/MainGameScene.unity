@@ -1414,6 +1414,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cdccecbcda00348b344e3bf78ec4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  messageTextTMP: {fileID: 1941810142}
+  canvasGroup: {fileID: 619862474}
   dungeonLevelList:
   - {fileID: 11400000, guid: 2ba1a689e62510644b38a22d43228f4d, type: 2}
   - {fileID: 11400000, guid: 7db15bbb398a67241b9f603f91dd54d0, type: 2}

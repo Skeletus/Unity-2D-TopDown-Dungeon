@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1858bf258d6acf54f9851820f50147c6, type: 3}
   m_Name: DungeonLevel_Level4
   m_EditorClassIdentifier: 
-  levelName: Nivel Cuatro
+  levelName: La Mansion Pinado
   roomTemplateList:
   - {fileID: 11400000, guid: 93d5a19f4b6aace49922793f3fb19975, type: 2}
   - {fileID: 11400000, guid: f3e9b41bf268eac4ea960aa8e5af4804, type: 2}
