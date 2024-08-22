@@ -1,12 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
+    #region Header GAMEOBJECT REFERENCES
+    [Space(10)]
+    [Header("GAMEOBJECT REFERENCES")]
+    #endregion Header GAMEOBJECT REFERENCES
+
+    #region Tooltip
+    [Tooltip("Populate with the MessageText textmeshpro component in the FadeScreenUI")]
+    #endregion Tooltip
+    [SerializeField] private TextMeshProUGUI messageTextTMP;
+
+    #region Tooltip
+    [Tooltip("Populate with the FadeImage canvasgroup component in the FadeScreenUI")]
+    #endregion Tooltip
+    [SerializeField] private CanvasGroup canvasGroup;
+
     #region Header DUNGEON LEVELS
     [Space(10)]
     [Header("DUNGEON LEVELS")]
@@ -92,6 +110,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Set multiplier to 1;
         scoreMultiplier = 1;
+
+        // Set screen to black
+        StartCoroutine(Fade(0f, 1f, 0f, Color.black));
     }
 
     private void Update()
@@ -222,6 +243,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // get nearest spawn point in room nearest to player
         player.gameObject.transform.position = HelperUtilities.GetSpawnPositionNearestToPlayer(player.gameObject.transform.position);
+
+        // Display Dungeon Level Text
+        StartCoroutine(DisplayDungeonLevelText());
     }
 
     /// <summary>
@@ -364,6 +388,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Wait 2 seconds
         yield return new WaitForSeconds(2f);
+
+        // Fade in canvas to display text message
+        yield return StartCoroutine(Fade(0f, 1f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+
+        // Display boss message
+        yield return StartCoroutine(DisplayMessageRoutine("WELL DONE  " + GameResources.Instance.currentPlayerSO.playerName + "!  YOU'VE SURVIVED ....SO FAR\n\nNOW FIND AND DEFEAT THE BOSS....GOOD LUCK!", Color.white, 5f));
+
+        // Fade out canvas
+        yield return StartCoroutine(Fade(1f, 0f, 2f, new Color(0f, 0f, 0f, 0.4f)));
     }
 
     /// <summary>
@@ -376,6 +409,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Wait 2 seconds
         yield return new WaitForSeconds(2f);
+
+        // Fade in canvas to display text message
+        yield return StartCoroutine(Fade(0f, 1f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+
+        // Display level completed
+        yield return StartCoroutine(DisplayMessageRoutine("WELL DONE " + GameResources.Instance.currentPlayerSO.playerName + "! \n\nYOU'VE SURVIVED THIS DUNGEON LEVEL", Color.white, 5f));
+
+        yield return StartCoroutine(DisplayMessageRoutine("COLLECT ANY LOOT ....THEN PRESS RETURN\n\nTO DESCEND FURTHER INTO THE DUNGEON", Color.white, 5f));
+
+        // Fade out canvas
+        yield return StartCoroutine(Fade(1f, 0f, 2f, new Color(0f, 0f, 0f, 0.4f)));
 
         // When player presses the return key proceed to the next level
         while (!Input.GetKeyDown(KeyCode.Return))
@@ -398,8 +442,18 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         previousGameState = GameState.gameWon;
 
-        // Wait 1 seconds
-        yield return new WaitForSeconds(1f);
+        // Disable player
+        GetPlayer().playerControl.DisablePlayer();
+
+        // Fade Out
+        yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
+
+        // Display game won
+        yield return StartCoroutine(DisplayMessageRoutine("WELL DONE " + GameResources.Instance.currentPlayerSO.playerName + "! YOU HAVE DEFEATED THE DUNGEON", Color.white, 3f));
+
+        yield return StartCoroutine(DisplayMessageRoutine("YOU SCORED " + gameScore.ToString("###,###0"), Color.white, 4f));
+
+        yield return StartCoroutine(DisplayMessageRoutine("PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
 
         // Set game state to restart game
         gameState = GameState.restartGame;
@@ -412,11 +466,107 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         previousGameState = GameState.gameLost;
 
+        // Disable player
+        GetPlayer().playerControl.DisablePlayer();
+
         // Wait 1 seconds
         yield return new WaitForSeconds(1f);
 
+        // Fade Out
+        yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
+
+        // Disable enemies (FindObjectsOfType is resource hungry - but ok to use in this end of game situation)
+        Enemy[] enemyArray = GameObject.FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemyArray)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+
+        // Display game lost
+        yield return StartCoroutine(DisplayMessageRoutine("BAD LUCK " + GameResources.Instance.currentPlayerSO.playerName + "! YOU HAVE SUCCUMBED TO THE DUNGEON", Color.white, 2f));
+
+        yield return StartCoroutine(DisplayMessageRoutine("YOU SCORED " + gameScore.ToString("###,###0"), Color.white, 4f));
+
+        yield return StartCoroutine(DisplayMessageRoutine("PRESS RETURN TO RESTART THE GAME", Color.white, 0f));
+
         // Set game state to restart game
         gameState = GameState.restartGame;
+    }
+
+    /// <summary>
+    /// Fade Canvas Group
+    /// </summary>
+    public IEnumerator Fade(float startFadeAlpha, float targetFadeAlpha, float fadeSeconds, Color backgroundColor)
+    {
+
+        Image image = canvasGroup.GetComponent<Image>();
+        image.color = backgroundColor;
+
+        float time = 0;
+
+        while (time <= fadeSeconds)
+        {
+            time += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startFadeAlpha, targetFadeAlpha, time / fadeSeconds);
+            yield return null;
+        }
+
+    }
+
+    /// <summary>
+    /// Display the dungeon level text
+    /// </summary>
+    private IEnumerator DisplayDungeonLevelText()
+    {
+        // Set screen to black
+        StartCoroutine(Fade(0f, 1f, 0f, Color.black));
+
+        GetPlayer().playerControl.DisablePlayer();
+
+        string messageText = "LEVEL " + (currentDungeonLevelListIndex + 1).ToString() + "\n\n" + dungeonLevelList[currentDungeonLevelListIndex].levelName.ToUpper();
+
+        yield return StartCoroutine(DisplayMessageRoutine(messageText, Color.white, 2f));
+
+        GetPlayer().playerControl.EnablePlayer();
+
+        // Fade In
+        yield return StartCoroutine(Fade(1f, 0f, 2f, Color.black));
+
+    }
+
+    /// <summary>
+    /// Display the message text for displaySeconds  - if displaySeconds =0 then the message is displayed until the return key is pressed
+    /// </summary>
+    private IEnumerator DisplayMessageRoutine(string text, Color textColor, float displaySeconds)
+    {
+        // Set text
+        messageTextTMP.SetText(text);
+        messageTextTMP.color = textColor;
+
+        // Display the message for the given time
+        if (displaySeconds > 0f)
+        {
+            float timer = displaySeconds;
+
+            while (timer > 0f && !Input.GetKeyDown(KeyCode.Return))
+            {
+                timer -= Time.deltaTime;
+                yield return null;
+            }
+        }
+        else
+        // else display the message until the return button is pressed
+        {
+            while (!Input.GetKeyDown(KeyCode.Return))
+            {
+                yield return null;
+            }
+        }
+
+        yield return null;
+
+        // Clear text
+        messageTextTMP.SetText("");
     }
 
     /// <summary>
@@ -431,6 +581,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 #if UNITY_EDITOR
     private void OnValidate()
     {
+        HelperUtilities.ValidateCheckNullValues(this, nameof(messageTextTMP), messageTextTMP);
+        HelperUtilities.ValidateCheckNullValues(this, nameof(canvasGroup), canvasGroup);
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(dungeonLevelList), dungeonLevelList);
     }
 #endif
