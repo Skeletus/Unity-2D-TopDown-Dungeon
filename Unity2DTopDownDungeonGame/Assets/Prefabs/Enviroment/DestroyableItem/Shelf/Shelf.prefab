@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b20dea91eb47b0145bf2b73fbcfe33fd, type: 2}
+    - target: {fileID: 2380060558889160555, guid: a14de82be32ee814c85c3c806eae9668, type: 3}
+      propertyPath: destroySoundEffect
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f32902ec02c9564b926a9b50dc7ec18, type: 2}
     - target: {fileID: 3857676532117366767, guid: a14de82be32ee814c85c3c806eae9668, type: 3}
       propertyPath: m_RootOrder
       value: 0
