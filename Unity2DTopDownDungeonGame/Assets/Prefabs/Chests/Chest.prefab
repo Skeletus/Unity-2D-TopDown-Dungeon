@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 5110295259337107110}
   - component: {fileID: 1079309262247418383}
   - component: {fileID: 4233559009910488013}
+  - component: {fileID: 4481128085036759733}
   m_Layer: 17
   m_Name: Chest
   m_TagString: Untagged
@@ -384,6 +385,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4481128085036759733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3771398565762462105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74339cc181030724bad5660e6d28e69f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materializeColor: {r: 15.999729, g: 12.481464, b: 1.507828, a: 0}
+  materializeTime: 3
+  itemSpawnPoint: {fileID: 5427333031763164670}
 --- !u!1 &4868149582654334617
 GameObject:
   m_ObjectHideFlags: 0
